@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://rsanand318.github.io/sitemap.xml
+Sitemap: https://rsanand318.github.ioblank/sitemap.xml
