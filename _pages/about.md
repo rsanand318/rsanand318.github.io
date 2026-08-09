@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: <a href='#'>Affiliations</a>. Atlanta, GA. 
+subtitle: GAMMA Lab. Atlanta, GA. 
 
 profile:
   align: right
