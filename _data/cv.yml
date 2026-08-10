@@ -4,7 +4,7 @@ cv:
   email: ranand77@gatech.edu
   location: Atlanta, GA
   image: ""
-  summary: "Analog/Mixed-Signal IC Design Engineer | M.S. ECE, Georgia Tech | B.S Electrical Engineering (Hons.), University of Illinois Urbana-Champaign | <br /><br />M.S. ECE candidate focused on analog and mixed-signal IC design, with hands-on experience designing CMOS ADC, OTA, DAC, gm-C, and RF circuits in 45-nm technology. Proficient in Cadence Virtuoso/Spectre, MATLAB/Simulink, and Python, with experience in transistor-level analysis, noise and linearity, PVT/corner verification, EM co-simulation, and gm/ID-based design."
+  summary: "Analog/Mixed-Signal IC Design Engineer <br /><br />M.S. ECE, Georgia Tech <br /><br />B.S Electrical Engineering (Hons.), University of Illinois Urbana-Champaign <br /><br />M.S. ECE candidate focused on analog and mixed-signal IC design, with hands-on experience designing CMOS ADC, OTA, DAC, gm-C, and RF circuits in 45-nm technology. Proficient in Cadence Virtuoso/Spectre, MATLAB/Simulink, and Python, with experience in transistor-level analysis, noise and linearity, PVT/corner verification, EM co-simulation, and gm/ID-based design."
   social_networks:
     # - network: X
     #   username: AlbertEinstein
