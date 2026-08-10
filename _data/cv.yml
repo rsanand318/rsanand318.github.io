@@ -81,7 +81,7 @@ cv:
       - company: Tesla Inc
         position: RF Hardware Design Engineering Intern
         location: Palo Alto, CA
-        start_date: Aug 2023
+        start_date: Aug
         end_date: Dec 2023
         highlights:
           - Simulated and tuned matching networks, reducing insertion loss and desense by 3 dB in the GNSS receiver chain.
@@ -91,7 +91,7 @@ cv:
       - company: IIT Madras Integrated Circuits Lab (Dr. Nagendra Krishnapura)
         position: Analog/Mixed Signal Design Summer Research Intern
         location: Chennai, India
-        start_date: May 2025
+        start_date: May
         end_date: Aug 2025
         highlights:
           - Analyzed a 10-bit SAR ADC consuming <500 µW power constraint with 1.2 V supply in TSMC 65 nm process.
@@ -108,7 +108,7 @@ cv:
       - company: Hinetics LLC
         position: Electrical Engineering Co-Op
         location: Champaign, IL
-        start_date: Jan 2023
+        start_date: Jan
         end_date: May 2023
 
     Projects:
@@ -119,7 +119,7 @@ cv:
               - Optimized pipeline architecture and modeling of CDAC mismatch, comparator offsets, kT/C noise using MATLAB/Simulink.
               - Designed and simulated 2-Stage miller-compensated OTA achieving 73 dB DC gain with 1 GHz BW consuming under 4 mW.
 
-            start_date: Aug 2025
+            start_date: Aug
             end_date: Dec 2025
 
           - name: 5 GHz RF Receiver Front End 
@@ -130,14 +130,14 @@ cv:
               - Designed a 5.2 GHz VCO with phase noise < –120 dBc/Hz and polyphase filters for quadrature LO generation.
               - Implemented double-balanced passive mixer with –7 dB conversion gain and image rejection ratio of 52 dB at 200 MHz IF.
 
-            start_date: Jan 2025
+            start_date: Jan
             end_date: May 2025
 
           - name: Low-Dropout Voltage Regulator (LDO) Design in 90nm CMOS
             # summary: Quantum computing is the use of quantum-mechanical phenomena such as superposition and entanglement to perform computation. Computers that perform quantum computations are known as quantum computers.
             highlights:
               - 	Designed telescopic-cascode-OTA LDO regulating 1.8V→1.2V across 0.1–10mA loads, meeting ≤500µV/V line and ≤50µV/mA load regulation specs.
-            start_date: Jan 2024
+            start_date: Jan
             end_date: May 2024
 
     # Volunteer:
