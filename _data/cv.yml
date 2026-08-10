@@ -112,7 +112,7 @@ cv:
           end_date: May 2023
 
     Projects:
-          - name: 12-Bit ENOB 300 MSPS Pipelined ADC in 45nm CMOS
+          - name: 12-Bit ENOB 300 MSPS Pipelined ADC in 45nm CMOS 
             # summary: Quantum computing is the use of quantum-mechanical phenomena such as superposition and entanglement to perform computation. Computers that perform quantum computations are known as quantum computers.
             highlights:
               - Developed > 73 dB SNDR pipelined ADC with seven 3.5b/1.5b/4b flash stages consuming < 80 mW power from a 1.2V supply.
