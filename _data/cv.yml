@@ -106,10 +106,10 @@ cv:
           - Designed and verified a 2.45 GHz Chebyshev Bandpass Filter using Keysight ADS.
 
       - company: Hinetics LLC
-          position: Electrical Engineering Co-Op
-          location: Champaign, IL
-          start_date: Jan 2023
-          end_date: May 2023
+        position: Electrical Engineering Co-Op
+        location: Champaign, IL
+        start_date: Jan 2023
+        end_date: May 2023
 
     Projects:
           - name: 12-Bit ENOB 300 MSPS Pipelined ADC in 45nm CMOS
@@ -139,7 +139,7 @@ cv:
               - 	Designed telescopic-cascode-OTA LDO regulating 1.8V→1.2V across 0.1–10mA loads, meeting ≤500µV/V line and ≤50µV/mA load regulation specs.
             start_date: Jan 2024
             end_date: May 2024
-            
+
     # Volunteer:
     #   - company: People's Climate March
     #     position: Lead Organizer
