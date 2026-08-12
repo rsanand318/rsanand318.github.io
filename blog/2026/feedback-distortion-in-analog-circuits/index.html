@@ -1,43 +1,415 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <hr> <p>layout: post title: “Feedback II: Distortion and Feedback in Analog Circuits” date: 2026-08-12 17:07:00 +0530 description: “How negative feedback desensitizes closed-loop gain to the signal-dependent nonlinearity of the open-loop amplifier, and why this suppresses harmonic and intermodulation distortion.” tags: feedback distortion analog-design fundamentals categories: analog-design feedback-series related_posts: false toc: sidebar: right ***</p> <p><em>Distortion and Feedback in Analog Circuits</em></p> <p>In the previous post of this series we derived the basic negative-feedback equation and looked at why feedback is used in the first place. That derivation quietly made an assumption worth revisiting: it treated the open-loop gain of the amplifier as a fixed number. In this post we drop that assumption and ask what happens when the open-loop gain is not constant — which, in any real transistor circuit, it never quite is. The answer turns out to be one of the cleanest illustrations of why negative feedback is such a powerful tool in analog design: it directly explains how feedback fights distortion.</p> <h2 id="where-nonlinearity-comes-from">Where Nonlinearity Comes From</h2> <p>Recall the closed-loop gain we derived earlier, where \(S_o\) and \(S_i\) are the output and input signals, \(a\) is the open-loop gain, and \(f\) is the feedback factor:</p> <p>\begin{equation} \label{eq:closed-loop-gain} \frac{S_o}{S_i} = A = \frac{a}{1+af} \end{equation}</p> <p>\eqref{eq:closed-loop-gain} is exact, but it is only useful if we know what \(a\) is — and in that derivation we quietly assumed \(a\) was some fixed constant, independent of signal level.</p> <p>That assumption breaks down as soon as you look inside the amplifier. A MOSFET’s \(I\)-\(V\) characteristic is a square-law (or worse, in short-channel devices) relationship, and a BJT’s collector current depends exponentially on \(V_{BE}\). Neither relationship is a straight line. So the small-signal gain you get by differentiating these characteristics — which is what \(a\) really is — depends on where along the curve you are biased, and on how far the input signal swings around that bias point. In other words, \(a\) is not a single number; it is a function of instantaneous signal level, of bias point, and of output swing.</p> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/posts/feedback-distortion-in-analog-circuits/open-loop-transfer-characteristic-480.webp 480w,/assets/img/posts/feedback-distortion-in-analog-circuits/open-loop-transfer-characteristic-800.webp 800w,/assets/img/posts/feedback-distortion-in-analog-circuits/open-loop-transfer-characteristic-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/posts/feedback-distortion-in-analog-circuits/open-loop-transfer-characteristic.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Non-ideal open-loop amplifier transfer characteristic with regions of slope a1, a2, and a3=0" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> <p>The figure captures this directly. The open-loop transfer characteristic isn’t a single straight line through the origin; it has different slopes in different regions. Near one operating point the incremental gain is \(a_1\); move to a different signal level and the slope becomes \(a_2\); push the amplifier far enough and the slope eventually collapses to \(a_3 = 0\) as the device leaves its useful region of operation entirely.</p> <p>This is exactly what we mean by <strong>distortion</strong>: the output is no longer a faithfully scaled copy of the input, because the “scale factor” itself is changing with the input. A sinusoid fed through a slope that keeps changing does not come out as a clean sinusoid — it comes out with harmonics and, if there are two tones present, intermodulation products. Practically, this nonlinearity is what limits the useful dynamic range of an amplifier: push the signal too far, and the output stops tracking it faithfully. If we intend to tape out something usable, we need a way to make the gain far less sensitive to where the signal happens to sit on that curve.</p> <h2 id="how-feedback-desensitizes-the-gain">How Feedback Desensitizes the Gain</h2> <p>This is precisely the problem negative feedback is good at solving — not by removing the nonlinearity inside the device, but by making the <em>closed-loop</em> gain far less sensitive to whatever the open-loop gain happens to be doing.</p> <p>Suppose the open-loop amplifier has two different operating regions, with gains \(a_1\) and \(a_2\) as before. Feedback maps each of these open-loop gains to its own closed-loop gain through the same relation as \eqref{eq:closed-loop-gain}:</p> \[A_1 = \frac{a_1}{1+a_1 f}, \qquad A_2 = \frac{a_2}{1+a_2 f}.\] <p>Now define the loop gain \(T = af\). If \(T \gg 1\) in both regions, each expression collapses to the same limit:</p> \[A_1 \approx \frac{1}{f}, \qquad A_2 \approx \frac{1}{f}.\] <p>Notice what just happened: \(a_1\) and \(a_2\) can be wildly different numbers, but \(A_1\) and \(A_2\) converge to nearly the same value, \(1/f\). The closed-loop gain has become almost independent of which open-loop region the amplifier is operating in. This is the entire mechanism in one line — feedback has not touched the device physics that made \(a\) nonlinear in the first place. It has simply arranged things so that, as long as loop gain is high, the <em>overall</em> gain is set by the feedback network rather than by the amplifier’s own nonlinear characteristic. The feedback network — typically a resistive divider or similarly well-controlled passive structure — is doing the job the transistor used to do, and it does that job far more linearly.</p> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/posts/feedback-distortion-in-analog-circuits/closed-loop-transfer-characteristic-480.webp 480w,/assets/img/posts/feedback-distortion-in-analog-circuits/closed-loop-transfer-characteristic-800.webp 800w,/assets/img/posts/feedback-distortion-in-analog-circuits/closed-loop-transfer-characteristic-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/posts/feedback-distortion-in-analog-circuits/closed-loop-transfer-characteristic.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Closed-loop transfer characteristic after feedback is applied, compared to the open-loop case" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> <p>The transfer-characteristic picture makes the same point visually. In the open-loop curve, the slope visibly changes from \(a_1\) to \(a_2\) as the signal moves. Once feedback is added and the loop gain is large enough, those same swings in internal slope get compressed into much smaller changes in the closed-loop slope. The closed-loop transfer characteristic looks far closer to a straight line than the open-loop one did — even though the underlying amplifier is exactly as nonlinear as before.</p> <p>One qualification is worth stating explicitly, because it’s easy to over-read the result above. The approximation \(A_i \approx 1/f\) is only as good as the condition \(T_i = a_i f \gg 1\) actually being satisfied in every region the signal visits. If the amplifier’s gain drops sharply enough in some region — near clipping, for instance, where \(a_3 \to 0\) — loop gain in that region can fall to where \(T \not\gg 1\) any longer, and the closed-loop gain will noticeably depart from \(1/f\). So the correct statement isn’t “feedback linearizes the amplifier” — it’s “feedback suppresses the effect of nonlinearity exactly to the extent that sufficient loop gain is maintained across the signal range in question.” Once loop gain runs out — near the edges of the swing — so does the benefit.</p> <h2 id="the-distortion-connection">The Distortion Connection</h2> <p>This is exactly why the technique shows up so often in audio power amplifiers. The core amplifier inside one of these is frequently quite nonlinear on its own — often deliberately simple, for efficiency or headroom reasons — but wrapping it in a negative-feedback loop with sufficient loop gain \(T\) makes the <em>overall</em> transfer characteristic close to linear.</p> <p>More precisely, the effect of the amplifier’s internal distortion on the output is attenuated by roughly the same factor that suppresses any other open-loop error term in a feedback system:</p> \[\frac{1}{1+T}.\] <p>This is a direct extension of the desensitization result above: whatever nonlinear distortion component the open-loop amplifier would have produced on its own gets divided down by \(1+T\) once the loop is closed. A sinusoidal input therefore comes out closer to a pure sinusoid, and two-tone intermodulation products shrink by the same factor. The chain of reasoning that gets us here is worth stating explicitly, since each step depends on the one before it:</p> <ol> <li>Device nonlinearities (square-law MOSFET behavior, exponential BJT behavior) make the open-loop gain \(a\) depend on signal level.</li> <li>A signal-dependent gain is, by definition, a nonlinear transfer characteristic — and a nonlinear transfer characteristic is what produces distortion.</li> <li>Negative feedback makes the closed-loop gain \(A\) far less sensitive to variations in \(a\).</li> <li>When loop gain \(T = af\) is large, \(A\) is set almost entirely by \(1/f\), regardless of which value \(a\) happens to take.</li> <li>Consequently, the harmonic and intermodulation distortion that the open-loop amplifier’s nonlinearity would have caused is suppressed by roughly \(1/(1+T)\).</li> </ol> <h2 id="summary">Summary</h2> <p>The picture to keep in mind is this: distortion, at its root, is signal-dependent gain in a nonlinear amplifier. Negative feedback doesn’t repair that nonlinearity inside the device — it makes the closed-loop transfer characteristic largely indifferent to it, provided the loop gain stays large across the operating range of interest.</p> <p>Put differently, the feedback loop stabilizes the overall voltage or current transfer function around the value set by the feedback network itself. Done properly, and with enough loop gain to spare, this gives you an output that tracks the input far more faithfully than the bare nonlinear amplifier ever could on its own.</p> <p>The next post in this series looks at the four canonical feedback configurations and how each one shapes gain, impedance, and — building on what we’ve covered here — distortion.</p> <h2 id="references">References</h2> <p>[1] Notes from ECE 483 Analog IC Design (Prof. Pavan Kumar Hanumolu) @ UIUC [2] Gray, P. R. (2009). ANALYSIS AND DESIGN OF ANALOG INTEGRATED CIRCUITS, 5TH ED. [3] Razavi, Behzad. Design of Analog CMOS Integrated Circuits. 2nd ed.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!--
-  See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
-  https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
---&gt;
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Feedback II: Distortion and Feedback in Analog Circuits | Rohith Sudarshan Anand </title> <meta name="author" content="Rohith Sudarshan Anand "> <meta name="description" content="How negative feedback desensitizes closed-loop gain to the signal-dependent nonlinearity of the open-loop amplifier, and why this suppresses harmonic and intermodulation distortion."> <meta name="keywords" content="analog design , mixed signal circuits, high-speed circuits, ADCs, transceivers, RFIC design"> <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; media-src 'self' https:; frame-src 'self' https:; connect-src 'self' https:;"> <style>
+  :root {
+    --max-content-width: 930px;
+  }
+</style> <link rel="stylesheet" href="/assets/css/tailwind.css?v=50c64c15cbb9fd1ce6056fdb8bcb4b62"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tocbot@4.36.4/dist/tocbot.css" integrity="sha256-zTN0r+0OKaIv2xqeNNIYxNk0pWJ6+IqPGc1iDgVzWF0=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css" integrity="sha256-MVopmdyC2tYTiJ8wlktf0uh0v4NgT+vNdyVFepi7Q0c=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.5/css/academicons.min.css" integrity="sha256-SzrCOBJbGVFMahewkgjwnApaV2+av1DwMAA+/QGLyZw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/scholar-icons@1.0.3/css/scholar-icons.css" integrity="sha256-VY3hHVj/hNX3fYG6wtbA6TcKJQl7+FthzGSyIB64klY=" crossorigin="anonymous"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?v=591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%F0%9F%90%85&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css?v=3116ba77db9ee1581d05bb3e86fbf7f1"> <link rel="canonical" href="https://rsanand318.github.io/blog/2026/feedback-distortion-in-analog-circuits/"> <script src="/assets/js/theme.js?v=5286c3e4c334d0ecb8fc0c40ff4fa7ec"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?v=5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Rohith Sudarshan Anand</span> </a> <button class="navbar-toggler collapsed navbar-toggler-main" type="button" data-nav-toggle="navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse navbar-collapse-main" id="navbarNav"> <ul class="navbar-nav navbar-menu-list flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item active"> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">projects </a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">CV </a> </li> <li class="nav-item"> <button id="search-toggle" type="button" title="Search" aria-label="Open search"> <span class="nav-link">ctrl k <i class="fa-solid fa-magnifying-glass"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" type="button" title="Change theme" aria-label="Change color theme"> <i class="fa-half-sun-moon" id="light-toggle-system"></i> <i class="fa-solid fa-moon" id="light-toggle-dark"></i> <i class="fa-solid fa-sun" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="row"> <div class="col-sm-9"> <div class="post"> <header class="post-header"> <h1 class="post-title">Feedback II: Distortion and Feedback in Analog Circuits</h1> <p class="post-meta"> Created on August 12, 2026 </p> <p class="post-tags"> <a href="/blog/2026"> <i class="fa-solid fa-calendar fa-sm"></i> 2026 </a>   ·   <a href="/blog/tag/feedback"> <i class="fa-solid fa-hashtag fa-sm"></i> feedback</a>   <a href="/blog/tag/distortion"> <i class="fa-solid fa-hashtag fa-sm"></i> distortion</a>   <a href="/blog/tag/analog-design"> <i class="fa-solid fa-hashtag fa-sm"></i> analog-design</a>   <a href="/blog/tag/fundamentals"> <i class="fa-solid fa-hashtag fa-sm"></i> fundamentals</a>   ·   <a href="/blog/category/analog-design"> <i class="fa-solid fa-tag fa-sm"></i> analog-design</a>   <a href="/blog/category/feedback-series"> <i class="fa-solid fa-tag fa-sm"></i> feedback-series</a> </p> </header> <article class="post-content"> <div id="markdown-content"> <p>In the previous post of this series we derived the basic negative-feedback equation and looked at why feedback is used in the first place. That derivation quietly made an assumption worth revisiting: it treated the open-loop gain of the amplifier as a fixed number. In this post we drop that assumption and ask what happens when the open-loop gain is not constant — which, in any real transistor circuit, it never quite is. The answer turns out to be one of the cleanest illustrations of why negative feedback is such a powerful tool in analog design: it directly explains how feedback fights distortion.</p> <h2 id="where-nonlinearity-comes-from">Where Nonlinearity Comes From</h2> <p>Recall the closed-loop gain we derived earlier, where \(S_o\) and \(S_i\) are the output and input signals, \(a\) is the open-loop gain, and \(f\) is the feedback factor:</p> <p>\begin{equation} \label{eq:closed-loop-gain} \frac{S_o}{S_i} = A = \frac{a}{1+af} \end{equation}</p> <p>Equation \eqref{eq:closed-loop-gain} is exact, but it is only useful if we know what \(a\) is — and in that derivation we quietly assumed \(a\) was some fixed constant, independent of signal level.</p> <p>That assumption breaks down as soon as you look inside the amplifier. A MOSFET’s \(I\)-\(V\) characteristic is a square-law (or worse, in short-channel devices) relationship, and a BJT’s collector current depends exponentially on \(V_{BE}\). Neither relationship is a straight line. So the small-signal gain you get by differentiating these characteristics — which is what \(a\) really is — depends on where along the curve you are biased, and on how far the input signal swings around that bias point. In other words, \(a\) is not a single number; it is a function of instantaneous signal level, of bias point, and of output swing.</p> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/posts/feedback-distortion-in-analog-circuits/open-loop-transfer-characteristic-480.webp 480w,/assets/img/posts/feedback-distortion-in-analog-circuits/open-loop-transfer-characteristic-800.webp 800w,/assets/img/posts/feedback-distortion-in-analog-circuits/open-loop-transfer-characteristic-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/posts/feedback-distortion-in-analog-circuits/open-loop-transfer-characteristic.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Non-ideal open-loop amplifier transfer characteristic" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> <figcaption class="caption">Non-ideal open-loop amplifier transfer characteristic with regions of slope $$a_1$$, $$a_2$$, and $$a_3=0$$.</figcaption> </figure> <p>The figure captures this directly. The open-loop transfer characteristic isn’t a single straight line through the origin; it has different slopes in different regions. Near one operating point the incremental gain is \(a_1\); move to a different signal level and the slope becomes \(a_2\); push the amplifier far enough and the slope eventually collapses to \(a_3 = 0\) as the device leaves its useful region of operation entirely.</p> <p>This is exactly what we mean by <strong>distortion</strong>: the output is no longer a faithfully scaled copy of the input, because the “scale factor” itself is changing with the input. A sinusoid fed through a slope that keeps changing does not come out as a clean sinusoid — it comes out with harmonics and, if there are two tones present, intermodulation products. Practically, this nonlinearity is what limits the useful dynamic range of an amplifier: push the signal too far, and the output stops tracking it faithfully. If we intend to tape out something usable, we need a way to make the gain far less sensitive to where the signal happens to sit on that curve.</p> <h2 id="how-feedback-desensitizes-the-gain">How Feedback Desensitizes the Gain</h2> <p>This is precisely the problem negative feedback is good at solving — not by removing the nonlinearity inside the device, but by making the <em>closed-loop</em> gain far less sensitive to whatever the open-loop gain happens to be doing.</p> <p>Suppose the open-loop amplifier has two different operating regions, with gains \(a_1\) and \(a_2\) as before. Feedback maps each of these open-loop gains to its own closed-loop gain through the same relation as \eqref{eq:closed-loop-gain}:</p> \[A_1 = \frac{a_1}{1+a_1 f}, \qquad A_2 = \frac{a_2}{1+a_2 f}\] <p>Now define the loop gain $T = af$. If $T \gg 1$ in both regions, each expression collapses to the same limit:</p> \[A_1 \approx \frac{1}{f}, \qquad A_2 \approx \frac{1}{f}\] <p>Notice what just happened: \(a_1\) and \(a_2\) can be wildly different numbers, but \(A_1\) and \(A_2\) converge to nearly the same value, \(1/f\). The closed-loop gain has become almost independent of which open-loop region the amplifier is operating in. This is the entire mechanism in one line — feedback has not touched the device physics that made \(a\) nonlinear in the first place. It has simply arranged things so that, as long as loop gain is high, the <em>overall</em> gain is set by the feedback network rather than by the amplifier’s own nonlinear characteristic. The feedback network — typically a resistive divider or similarly well-controlled passive structure — is doing the job the transistor used to do, and it does that job far more linearly.</p> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/posts/feedback-distortion-in-analog-circuits/closed-loop-transfer-characteristic-480.webp 480w,/assets/img/posts/feedback-distortion-in-analog-circuits/closed-loop-transfer-characteristic-800.webp 800w,/assets/img/posts/feedback-distortion-in-analog-circuits/closed-loop-transfer-characteristic-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/posts/feedback-distortion-in-analog-circuits/closed-loop-transfer-characteristic.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Closed-loop transfer characteristic" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> <figcaption class="caption">Closed-loop transfer characteristic after feedback is applied, compared to the open-loop case.</figcaption> </figure> <p>The transfer-characteristic picture makes the same point visually. In the open-loop curve, the slope visibly changes from \(a_1\) to \(a_2\) as the signal moves. Once feedback is added and the loop gain is large enough, those same swings in internal slope get compressed into much smaller changes in the closed-loop slope. The closed-loop transfer characteristic looks far closer to a straight line than the open-loop one did — even though the underlying amplifier is exactly as nonlinear as before.</p> <p>One qualification is worth stating explicitly, because it’s easy to over-read the result above. The approximation \(A_i \approx 1/f\) is only as good as the condition \(T_i = a_i f \gg 1\) actually being satisfied in every region the signal visits. If the amplifier’s gain drops sharply enough in some region — near clipping, for instance, where \(a_3 \to 0\) — loop gain in that region can fall to where \(T \not\gg 1\) any longer, and the closed-loop gain will noticeably depart from \(1/f\). So the correct statement isn’t “feedback linearizes the amplifier” — it’s “feedback suppresses the effect of nonlinearity exactly to the extent that sufficient loop gain is maintained across the signal range in question.” Once loop gain runs out — near the edges of the swing — so does the benefit.</p> <h2 id="the-distortion-connection">The Distortion Connection</h2> <p>This is exactly why the technique shows up so often in audio power amplifiers. The core amplifier inside one of these is frequently quite nonlinear on its own — often deliberately simple, for efficiency or headroom reasons — but wrapping it in a negative-feedback loop with sufficient loop gain $T$ makes the <em>overall</em> transfer characteristic close to linear.</p> <p>More precisely, the effect of the amplifier’s internal distortion on the output is attenuated by roughly the same factor that suppresses any other open-loop error term in a feedback system:</p> \[\frac{1}{1+T}\] <p>This is a direct extension of the desensitization result above: whatever nonlinear distortion component the open-loop amplifier would have produced on its own gets divided down by \(1+T\) once the loop is closed. A sinusoidal input therefore comes out closer to a pure sinusoid, and two-tone intermodulation products shrink by the same factor. The chain of reasoning that gets us here is worth stating explicitly, since each step depends on the one before it:</p> <ol> <li>Device nonlinearities (square-law MOSFET behavior, exponential BJT behavior) make the open-loop gain \(a\) depend on signal level.</li> <li>A signal-dependent gain is, by definition, a nonlinear transfer characteristic — and a nonlinear transfer characteristic is what produces distortion.</li> <li>Negative feedback makes the closed-loop gain \(A\) far less sensitive to variations in \(a\).</li> <li>When loop gain \(T = af\) is large, \(A\) is set almost entirely by \(1/f\), regardless of which value \(a\) happens to take.</li> <li>Consequently, the harmonic and intermodulation distortion that the open-loop amplifier’s nonlinearity would have caused is suppressed by roughly \(1/(1+T)\).</li> </ol> <h2 id="summary">Summary</h2> <p>The picture to keep in mind is this: distortion, at its root, is signal-dependent gain in a nonlinear amplifier. Negative feedback doesn’t repair that nonlinearity inside the device — it makes the closed-loop transfer characteristic largely indifferent to it, provided the loop gain stays large across the operating range of interest.</p> <p>Put differently, the feedback loop stabilizes the overall voltage or current transfer function around the value set by the feedback network itself. Done properly, and with enough loop gain to spare, this gives you an output that tracks the input far more faithfully than the bare nonlinear amplifier ever could on its own.</p> <p>The next post in this series looks at the four canonical feedback configurations and how each one shapes gain, impedance, and — building on what we’ve covered here — distortion.</p> <h2 id="references">References</h2> <ol> <li>Notes from ECE 483 Analog IC Design (Prof. Pavan Kumar Hanumolu) @ UIUC</li> <li>Gray, P. R. (2009). <em>Analysis and Design of Analog Integrated Circuits</em>, 5th ed.</li> <li>Razavi, Behzad. <em>Design of Analog CMOS Integrated Circuits</em>, 2nd ed.</li> </ol> </div> </article> </div> </div> <div class="col-sm-3"> <nav id="toc-sidebar" class="sticky-top toc toc-sidebar" aria-label="Table of contents" data-toc-collapse="expanded" data-toc-collapse-depth=""></nav> </div> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Rohith Sudarshan Anand . Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Last updated: August 12, 2026. </div> </footer> <script>
+  window.alFolio = {
+    compatBootstrap: false
+  };
+</script> <script src="/assets/js/nav-toggle.js?v=141bd79a73ebc0f0b6ea58e440ae79fc"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?v=e49affc7bd2646f6acdad1dbe02c2359" type="text/javascript"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/al_math/js/mathjax-setup.js"></script> <script src="/assets/js/tooltips-setup.js?v=fe487e99db6c43751e6e7bdb2d6a0611"></script> <script defer src="https://cdn.jsdelivr.net/npm/tocbot@4.36.4/dist/tocbot.min.js" integrity="sha256-lo/r+jQ81wWrxdIiiiEEd538z4+dTJTt+leOuAS7GCw=" crossorigin="anonymous"></script> <script src="/assets/js/no_defer.js?v=53b1b1a645525975c963ce8bf8bfefcf"></script> <script defer src="/assets/js/common.js?v=87baac90f765f2f3362dcf6aaf312a8a"></script> <script defer src="/assets/js/copy_code.js?v=c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?v=896d254890d9b47f0281f63bfccf0dee"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/al_img_tools/js/zoom.js"></script> <script defer src="/assets/js/progress-bar.js?v=499464c5c63ced6cf7ad62509f1e2610" type="text/javascript"></script> <script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js" integrity="sha256-uMJJ3EoTyfRBoTbR+lrfu1uRQ87RZG8AR3cVNuQVeFg=" crossorigin="anonymous"></script> <script>
+    addBackToTop();
+  </script> <script type="module" src="/assets/al_search/js/search/ninja-keys.min.js"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/al_search/js/search-setup.js"></script> <script>
+// get the ninja-keys element
+const ninja = document.querySelector('ninja-keys');
 
-  
-    &lt;source
-      class="responsive-img-srcset"
-      
-        srcset="/assets/img/posts/feedback-distortion-in-analog-circuits/open-loop-transfer-characteristic-480.webp 480w,/assets/img/posts/feedback-distortion-in-analog-circuits/open-loop-transfer-characteristic-800.webp 800w,/assets/img/posts/feedback-distortion-in-analog-circuits/open-loop-transfer-characteristic-1400.webp 1400w,"
-        type="image/webp"
-      
-      
-        sizes="95vw"
-      
-    &gt;
-  
+// add the home and posts menu items
+ninja.data = [{
+    id: "nav-about",
+    title: "about",
+    section: "Navigation",
+    handler: () => {
+      window.location.href = "/";
+    },
+  },{id: "nav-blog",
+          title: "blog",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/blog/";
+          },
+        },{id: "nav-publications",
+          title: "publications",
+          description: "publications by categories in reversed chronological order. generated by jekyll-scholar.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/publications/";
+          },
+        },{id: "nav-projects",
+          title: "projects",
+          description: "A growing collection of your cool projects.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/projects/";
+          },
+        },{id: "nav-cv",
+          title: "CV",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/cv/";
+          },
+        },{id: "post-feedback-ii-distortion-and-feedback-in-analog-circuits",
+        
+          title: "Feedback II: Distortion and Feedback in Analog Circuits",
+        
+        description: "How negative feedback desensitizes closed-loop gain to the signal-dependent nonlinearity of the open-loop amplifier, and why this suppresses harmonic and intermodulation distortion.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/feedback-distortion-in-analog-circuits/";
+          
+        },
+      },{id: "post-feedback-i-negative-feedback-amplifiers",
+        
+          title: "Feedback I Negative Feedback Amplifiers",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/feedback-i-negative-feedback-amplifiers/";
+          
+        },
+      },{id: "post-a-post-with-plotly-js",
+        
+          title: "a post with plotly.js",
+        
+        description: "this is what included plotly.js code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/plotly/";
+          
+        },
+      },{id: "post-a-post-with-image-galleries",
+        
+          title: "a post with image galleries",
+        
+        description: "this is what included image galleries could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/photo-gallery/";
+          
+        },
+      },{id: "post-google-gemini-updates-flash-1-5-gemma-2-and-project-astra",
+        
+          title: 'Google Gemini updates: Flash 1.5, Gemma 2 and Project Astra <svg width="1.2rem" height="1.2rem" top=".5rem" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "We’re sharing updates across our Gemini family of models and a glimpse of Project Astra, our vision for the future of AI assistants.",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/", "_blank");
+          
+        },
+      },{id: "post-a-post-with-tabs",
+        
+          title: "a post with tabs",
+        
+        description: "this is what included tabs in a post could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/tabs/";
+          
+        },
+      },{id: "post-a-post-that-can-be-cited",
+        
+          title: "a post that can be cited",
+        
+        description: "this is what a post that can be cited looks like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/post-citation/";
+          
+        },
+      },{id: "post-a-post-with-advanced-image-components",
+        
+          title: "a post with advanced image components",
+        
+        description: "this is what advanced image components could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/advanced-images/";
+          
+        },
+      },{id: "post-a-post-with-echarts",
+        
+          title: "a post with echarts",
+        
+        description: "this is what included echarts code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/echarts/";
+          
+        },
+      },{id: "post-a-post-with-bibliography",
+        
+          title: "a post with bibliography",
+        
+        description: "an example of a blog post with bibliography",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/post-bibliography/";
+          
+        },
+      },{id: "post-a-post-with-audios",
+        
+          title: "a post with audios",
+        
+        description: "this is what included audios could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/audios/";
+          
+        },
+      },{id: "post-a-post-with-videos",
+        
+          title: "a post with videos",
+        
+        description: "this is what included videos could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/videos/";
+          
+        },
+      },{id: "post-displaying-beautiful-interactive-tables",
+        
+          title: "displaying beautiful interactive tables",
+        
+        description: "an example of how to use interactive tables in al-folio",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/tables/";
+          
+        },
+      },{id: "post-a-post-with-table-of-contents",
+        
+          title: "a post with table of contents",
+        
+        description: "an example of a blog post with table of contents",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/table-of-contents/";
+          
+        },
+      },{id: "post-displaying-external-posts-on-your-al-folio-blog",
+        
+          title: 'Displaying External Posts on Your al-folio Blog <svg width="1.2rem" height="1.2rem" top=".5rem" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://medium.com/@al-folio/displaying-external-posts-on-your-al-folio-blog-b60a1d241a0a?source=rss-17feae71c3c4------2", "_blank");
+          
+        },
+      },{id: "post-a-post-with-redirect",
+        
+          title: "a post with redirect",
+        
+        description: "you can also redirect to assets like pdf",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/assets/pdf/example_pdf.pdf";
+          
+        },
+      },{id: "post-a-post-with-diagrams",
+        
+          title: "a post with diagrams",
+        
+        description: "an example of a blog post with diagrams",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/diagrams/";
+          
+        },
+      },{id: "post-a-distill-style-blog-post",
+        
+          title: "a distill-style blog post",
+        
+        description: "an example of a distill-style blog post and main elements",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/distill/";
+          
+        },
+      },{id: "post-a-post-with-disqus-comments",
+        
+          title: "a post with disqus comments",
+        
+        description: "an example of a blog post with disqus comments",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2015/disqus-comments/";
+          
+        },
+      },{id: "post-a-post-with-math",
+        
+          title: "a post with math",
+        
+        description: "an example of a blog post with some math",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2015/math/";
+          
+        },
+      },{id: "post-a-post-with-code",
+        
+          title: "a post with code",
+        
+        description: "an example of a blog post with some code",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2015/code/";
+          
+        },
+      },{id: "post-a-post-with-images",
+        
+          title: "a post with images",
+        
+        description: "this is what included images could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2015/images/";
+          
+        },
+      },{id: "books-the-godfather",
+          title: 'The Godfather',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/the_godfather/";
+            },},{id: "news-a-simple-inline-announcement",
+          title: 'A simple inline announcement.',
+          description: "",
+          section: "News",},{id: "news-a-long-announcement-with-details",
+          title: 'A long announcement with details',
+          description: "",
+          section: "News",handler: () => {
+              window.location.href = "/news/announcement_2/";
+            },},{id: "news-a-simple-inline-announcement-with-markdown-emoji-sparkles-smile",
+          title: 'A simple inline announcement with Markdown emoji! <img class="emoji" title=":sparkles:" alt=":sparkles:" src="https://github.githubassets.com/images/icons/emoji/unicode/2728.png" height="20" width="20"> <img class="emoji" title=":smile:" alt=":smile:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f604.png" height="20" width="20">',
+          description: "",
+          section: "News",},{id: "projects-project-1",
+          title: 'project 1',
+          description: "with background image",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/1_project/";
+            },},{id: "projects-project-2",
+          title: 'project 2',
+          description: "a project with a background image and giscus comments",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/2_project/";
+            },},{id: "projects-project-3-with-very-long-name",
+          title: 'project 3 with very long name',
+          description: "a project that redirects to another website",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/3_project/";
+            },},{id: "projects-project-4",
+          title: 'project 4',
+          description: "another without an image",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/4_project/";
+            },},{id: "projects-project-5",
+          title: 'project 5',
+          description: "a project with a background image",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/5_project/";
+            },},{id: "projects-project-6",
+          title: 'project 6',
+          description: "a project with no image",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/6_project/";
+            },},{id: "projects-project-7",
+          title: 'project 7',
+          description: "with background image",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/7_project/";
+            },},{id: "projects-project-8",
+          title: 'project 8',
+          description: "an other project with a background image and giscus comments",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/8_project/";
+            },},{id: "projects-project-9",
+          title: 'project 9',
+          description: "another project with an image 🎉",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/9_project/";
+            },},{id: "teachings-data-science-fundamentals",
+          title: 'Data Science Fundamentals',
+          description: "This course covers the foundational aspects of data science, including data collection, cleaning, analysis, and visualization. Students will learn practical skills for working with real-world datasets.",
+          section: "Teachings",handler: () => {
+              window.location.href = "/teachings/data-science-fundamentals/";
+            },},{id: "teachings-introduction-to-machine-learning",
+          title: 'Introduction to Machine Learning',
+          description: "This course provides an introduction to machine learning concepts, algorithms, and applications. Students will learn about supervised and unsupervised learning, model evaluation, and practical implementations.",
+          section: "Teachings",handler: () => {
+              window.location.href = "/teachings/introduction-to-machine-learning/";
+            },},{
+        id: 'social-cv',
+        title: 'CV',
+        section: 'Socials',
+        handler: () => {
+          window.open("/assets/pdf/example_pdf.pdf", "_blank");
+        },
+      },{
+        id: 'social-email',
+        title: 'email',
+        section: 'Socials',
+        handler: () => {
+          window.open("mailto:%72%61%6E%61%6E%64%37%37@%67%61%74%65%63%68.%65%64%75", "_blank");
+        },
+      },{
+        id: 'social-linkedin',
+        title: 'LinkedIn',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://www.linkedin.com/in/rohith-sudarshan-anand-576b77242", "_blank");
+        },
+      },{
+      id: 'light-theme',
+      title: 'Change theme to light',
+      description: 'Change the theme of the site to Light',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("light");
+      },
+    },
+    {
+      id: 'dark-theme',
+      title: 'Change theme to dark',
+      description: 'Change the theme of the site to Dark',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("dark");
+      },
+    },
+    {
+      id: 'system-theme',
+      title: 'Use system default theme',
+      description: 'Change the theme of the site to System Default',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("system");
+      },
+    },];
 
-&lt;img
-  src="/assets/img/posts/feedback-distortion-in-analog-circuits/open-loop-transfer-characteristic.png"
-  
-    class="img-fluid rounded z-depth-1"
-  
-  
-    width="100%"
-  
-  
-    height="auto"
-  
-  
-  
-  
-    title="Non-ideal open-loop amplifier transfer characteristic with regions of slope a1, a2, and a3=0"
-  
-  
-    data-zoomable
-  
-  
-    loading="lazy"
-  
-  onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"
-&gt;
-</code></pre></div></div> <p>&lt;/picture&gt;</p> <p>&lt;/figure&gt;</p> <p>Status: missing — author must provide (source notes referenced this figure but did not include the actual image file; also flagged as ambiguous relative to figure 2 below)</p> <ol> <li>Source/role: Closed-loop transfer characteristic after feedback is applied, used in “How Feedback Desensitizes the Gain” Exact filename: closed-loop-transfer-characteristic.png Exact repository path: assets/img/posts/feedback-distortion-in-analog-circuits/closed-loop-transfer-characteristic.png Used in post as:</li> </ol> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/posts/feedback-distortion-in-analog-circuits/closed-loop-transfer-characteristic-480.webp 480w,/assets/img/posts/feedback-distortion-in-analog-circuits/closed-loop-transfer-characteristic-800.webp 800w,/assets/img/posts/feedback-distortion-in-analog-circuits/closed-loop-transfer-characteristic-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/posts/feedback-distortion-in-analog-circuits/closed-loop-transfer-characteristic.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Closed-loop transfer characteristic after feedback is applied, compared to the open-loop case" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> <p>Status: missing — author must provide (source notes referenced this figure with the same placeholder tag as figure 1; confirm this is a distinct image before deployment)</p> <p>Thumbnail, if used: None — no suitable thumbnail image was supplied in the source notes, so the thumbnail field has been omitted from the front matter.</p> <p>Deployment checks:</p> <ul> <li>Confirm every listed file exists at its exact case-sensitive path.</li> <li>Confirm every image include path in the article matches the manifest exactly.</li> <li>Confirm the thumbnail path, if present, matches a real file.</li> <li>Commit both the Markdown post and all listed image files before deployment.</li> <li>Resolve the ambiguity flagged in items 1 and 2: the source document used the same image placeholder for what appear to be two different figures (open-loop vs. closed-loop transfer characteristics). Verify against the original notes/screenshots before finalizing filenames. –&gt;</li> </ul> </body></html>
+</script> <script src="/assets/al_search/js/shortcut-key.js"></script> </body> </html>
