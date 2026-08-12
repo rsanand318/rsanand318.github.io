@@ -6,6 +6,8 @@ description: "How negative feedback desensitizes closed-loop gain to the signal-
 tags: feedback distortion analog-design fundamentals
 categories: analog-design feedback-series
 related_posts: false
+citation: true
+disqus_comments: true
 toc:
   sidebar: right
 ---

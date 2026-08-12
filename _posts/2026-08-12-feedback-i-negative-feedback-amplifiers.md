@@ -3,9 +3,11 @@ layout: post
 title: "Feedback I: What Negative Feedback Actually Does"
 date: 2026-08-12 19:30:00 +0530
 description: "An intuitive and mathematical derivation of the basic negative-feedback equation, loop gain, and why large loop gain forces the feedback signal to track the input."
-tags: feedback analog-design fundamentals amplifiers
+tags: feedback-series analog-design fundamentals amplifiers
 categories: analog-design feedback-series
 related_posts: false
+citation: true
+disqus_comments: true
 toc:
   sidebar: right
 ---
@@ -15,7 +17,6 @@ Post: Feedback I — What Negative Feedback Actually Does
 Source: author's personal study notes (Feedback-I_-Negative-Feedback-Amplifiers-2.md)
 {% endcomment %}
 
-_What Negative Feedback Actually Does_
 
 ## Why use negative feedback?
 
@@ -369,3 +370,9 @@ Deployment checks:
 - Commit both the Markdown post and all listed image files before deployment.
 
 {% endcomment %}
+
+## References
+
+1. Notes from ECE 483 Analog IC Design (Prof. Pavan Kumar Hanumolu) @ UIUC
+2. Gray, P. R. (2009). *Analysis and Design of Analog Integrated Circuits*, 5th ed.
+3. Razavi, Behzad. *Design of Analog CMOS Integrated Circuits*, 2nd ed.
