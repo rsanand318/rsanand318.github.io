@@ -28,7 +28,7 @@ That assumption breaks down as soon as you look inside the amplifier. A MOSFETâ€
 {% include figure.liquid 
    path="assets/img/posts/feedback-distortion-in-analog-circuits/open-loop-transfer-characteristic.png" 
    title="Non-ideal open-loop amplifier transfer characteristic" 
-   caption="Non-ideal open-loop amplifier transfer characteristic with regions of slope $$a_1$$, $$a_2$$, and $$a_3=0$$." 
+   caption="Non-ideal open-loop amplifier transfer characteristic with regions of slope $a_1$, $a_2$, and $a_3=0$." 
    zoomable=true 
    class="img-fluid rounded z-depth-1" 
 %}

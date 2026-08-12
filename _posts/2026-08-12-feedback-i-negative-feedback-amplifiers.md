@@ -1,4 +1,3 @@
-<!-- filename: 2026-08-12-feedback-i-negative-feedback-amplifiers.md -->
 ---
 layout: post
 title: "Feedback I: What Negative Feedback Actually Does"
@@ -17,8 +16,6 @@ Source: author's personal study notes (Feedback-I_-Negative-Feedback-Amplifiers-
 {% endcomment %}
 
 _What Negative Feedback Actually Does_
-
-\#feedback-series, \#feedback, \#analogdesign, \#fundamentals
 
 ## Why use negative feedback?
 
