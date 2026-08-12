@@ -4,7 +4,25 @@
   }
 </style> <link rel="stylesheet" href="/assets/css/tailwind.css?v=50c64c15cbb9fd1ce6056fdb8bcb4b62"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tocbot@4.36.4/dist/tocbot.css" integrity="sha256-zTN0r+0OKaIv2xqeNNIYxNk0pWJ6+IqPGc1iDgVzWF0=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css" integrity="sha256-MVopmdyC2tYTiJ8wlktf0uh0v4NgT+vNdyVFepi7Q0c=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.5/css/academicons.min.css" integrity="sha256-SzrCOBJbGVFMahewkgjwnApaV2+av1DwMAA+/QGLyZw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/scholar-icons@1.0.3/css/scholar-icons.css" integrity="sha256-VY3hHVj/hNX3fYG6wtbA6TcKJQl7+FthzGSyIB64klY=" crossorigin="anonymous"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?v=591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%F0%9F%90%85&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css?v=3116ba77db9ee1581d05bb3e86fbf7f1"> <link rel="canonical" href="https://rsanand318.github.io/blog/2026/feedback-i-negative-feedback-amplifiers/"> <script src="/assets/js/theme.js?v=5286c3e4c334d0ecb8fc0c40ff4fa7ec"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?v=5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
     initTheme();
-  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Rohith Sudarshan Anand</span> </a> <button class="navbar-toggler collapsed navbar-toggler-main" type="button" data-nav-toggle="navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse navbar-collapse-main" id="navbarNav"> <ul class="navbar-nav navbar-menu-list flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item active"> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">projects </a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">CV </a> </li> <li class="nav-item"> <button id="search-toggle" type="button" title="Search" aria-label="Open search"> <span class="nav-link">ctrl k <i class="fa-solid fa-magnifying-glass"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" type="button" title="Change theme" aria-label="Change color theme"> <i class="fa-half-sun-moon" id="light-toggle-system"></i> <i class="fa-solid fa-moon" id="light-toggle-dark"></i> <i class="fa-solid fa-sun" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="row"> <div class="col-sm-9"> <div class="post"> <header class="post-header"> <h1 class="post-title">Feedback I: What Negative Feedback Actually Does</h1> <p class="post-meta"> Created on August 12, 2026 </p> <p class="post-tags"> <a href="/blog/2026"> <i class="fa-solid fa-calendar fa-sm"></i> 2026 </a>   ·   <a href="/blog/tag/feedback"> <i class="fa-solid fa-hashtag fa-sm"></i> feedback</a>   <a href="/blog/tag/analog-design"> <i class="fa-solid fa-hashtag fa-sm"></i> analog-design</a>   <a href="/blog/tag/fundamentals"> <i class="fa-solid fa-hashtag fa-sm"></i> fundamentals</a>   <a href="/blog/tag/amplifiers"> <i class="fa-solid fa-hashtag fa-sm"></i> amplifiers</a>   ·   <a href="/blog/category/analog-design"> <i class="fa-solid fa-tag fa-sm"></i> analog-design</a>   <a href="/blog/category/feedback-series"> <i class="fa-solid fa-tag fa-sm"></i> feedback-series</a> </p> </header> <article class="post-content"> <div id="markdown-content"> <p><em>What Negative Feedback Actually Does</em></p> <h2 id="why-use-negative-feedback">Why use negative feedback?</h2> <p>One of the most significant benefits of negative feedback in amplifiers is that it makes the closed-loop behavior less sensitive to changes in the underlying amplifier. For example, the open-loop gain can vary with supply voltage, temperature, process variation, device mismatch, and aging. Negative feedback can reduce the extent to which these variations appear in the overall closed-loop gain.</p> <p>Feedback also gives the designer a way to control properties such as the input and output impedances of the overall circuit. In the idealized feedback framework, these closed-loop properties can be controlled through the feedback configuration while the underlying amplifier properties are treated separately.</p> <p>Feedback can also be used deliberately to extend amplifier bandwidth, which will be explored later in the series.</p> <p>The main tradeoff is that negative feedback reduces the closed-loop gain relative to the open-loop gain. In practice, this loss of gain can be compensated for by using additional amplifier stages when necessary.</p> <h2 id="the-basic-negative-feedback-configuration">The basic negative-feedback configuration</h2> <p>Consider the basic feedback configuration below.</p> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/posts/feedback-i-negative-feedback-amplifiers/basic-feedback-loop-480.webp 480w,/assets/img/posts/feedback-i-negative-feedback-amplifiers/basic-feedback-loop-800.webp 800w,/assets/img/posts/feedback-i-negative-feedback-amplifiers/basic-feedback-loop-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/posts/feedback-i-negative-feedback-amplifiers/basic-feedback-loop.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Block diagram of the basic negative-feedback configuration showing the summing node, amplifier gain a, and feedback network f" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> <p>The system consists of four main elements:</p> <ul> <li>\(S_i\): input signal.</li> <li>\(S_\epsilon\): error signal applied to the basic amplifier.</li> <li>\(a\): open-loop gain of the basic amplifier.</li> <li>\(S_o\): output signal.</li> <li>\(f\): feedback factor of the feedback network.</li> <li>\(S_{fb}\): feedback signal returned to the input summing node.</li> </ul> <p>The feedback is <strong>negative</strong> because the feedback signal is subtracted from the input signal at the summing node.</p> <p>The key idea is that the amplifier does not directly amplify \(S_i\). It amplifies the <strong>error signal</strong> \(S_\epsilon\) created by the difference between the input and the feedback signal.</p> <p>This gives the two fundamental relationships:</p> \[S_o = a S_\epsilon\] <p>and</p> \[S_\epsilon = S_i - S_{fb}.\] <p>The feedback network, in turn, produces a fraction of the output:</p> \[S_{fb} = f S_o.\] <p>Substituting the error equation into the amplifier equation gives</p> \[S_o = a(S_i - S_{fb})\] <p>or, using \(S_{fb} = f S_o\),</p> \[S_o = a S_i - a f S_o.\] <p>Rearranging,</p> \[S_o (1 + af) = a S_i.\] <p>Therefore, the closed-loop gain is</p> \[A \equiv \frac{S_o}{S_i} = \frac{a}{1+af}.\] <p>This is the fundamental negative-feedback equation for the basic model.</p> <h2 id="open-loop-gain-closed-loop-gain-and-loop-gain">Open-loop gain, closed-loop gain, and loop gain</h2> <p>Here, \(a\) is the <strong>open-loop gain</strong>: the gain of the basic amplifier when the feedback loop is not closed.</p> <p>Once the feedback path is included, the overall gain becomes the <strong>closed-loop gain</strong>, which we denote by \(A\):</p> \[A = \frac{S_o}{S_i} = \frac{a}{1+af}.\] <p>It is also useful to define</p> \[T = af\] <p>and call \(T\) the <strong>loop gain</strong> for this basic feedback model. It represents the product of the forward-path gain and the feedback factor around the loop.</p> <p>The closed-loop gain can then be written as</p> <p>\begin{equation} \label{eq:closed-loop-gain} A = \frac{a}{1+T}. \end{equation}</p> <p>This equation is the starting point for understanding why feedback is so useful.</p> <h2 id="what-happens-when-the-loop-gain-is-large">What happens when the loop gain is large?</h2> <p>Suppose</p> \[T = af \gg 1.\] <p>Then \(1 + af \approx af\), so</p> \[A = \frac{a}{1+af} \approx \frac{a}{af} = \frac{1}{f}.\] <p>Thus, when the loop gain is sufficiently large, the closed-loop gain is approximately determined by the feedback factor:</p> \[\boxed{A \approx \frac{1}{f}}.\] <p>This is extremely useful because the open-loop gain \(a\) is generally difficult to control precisely. It can depend strongly on process variations, device mismatch, supply conditions, temperature, and other changes in the underlying circuit.</p> <p>The feedback factor \(f\), on the other hand, can often be made much easier to control, particularly when it is implemented using relatively well-controlled passive components.</p> <p>Therefore, negative feedback allows us to build a circuit whose overall gain is determined primarily by the feedback network rather than by the exact value of the underlying amplifier gain.</p> <p>The important point is that the approximation \(A \approx 1/f\) is not true merely because feedback is present. It requires sufficiently large loop gain:</p> \[af \gg 1.\] <h2 id="why-does-the-feedback-signal-approach-the-input">Why does the feedback signal approach the input?</h2> <p>The equations above also give a more intuitive picture of what the feedback loop is doing.</p> <p>The amplifier amplifies the error:</p> \[S_\epsilon = S_i - S_{fb}\] <p>and therefore</p> \[S_o = a S_\epsilon.\] <p>The feedback network then generates</p> \[S_{fb} = f S_o.\] <p>Now consider what happens if the feedback signal is initially smaller than the input:</p> \[S_{fb} &lt; S_i.\] <p>The error signal is positive and relatively large:</p> \[S_\epsilon = S_i - S_{fb}.\] <p>The amplifier therefore produces a larger output, which causes the feedback network to produce a larger \(S_{fb}\). This reduces the difference between \(S_i\) and \(S_{fb}\).</p> <p>Conversely, if the feedback signal becomes larger than the input,</p> \[S_{fb} &gt; S_i,\] <p>then the error signal changes in the opposite direction. The amplifier output and consequently the feedback signal are driven back toward the input.</p> <p>So the feedback loop continually acts to reduce the error between the input and feedback signals.</p> <p>This is the central intuition behind negative feedback:</p> <blockquote> <p><strong>The amplifier amplifies the error, and the resulting output is fed back in such a way that the error is reduced.</strong></p> </blockquote> <p>The feedback signal is therefore not made equal to the input by some independent mechanism. Rather, the loop gain causes even a small difference between them to produce a corrective output that pushes the feedback signal toward the input.</p> <h2 id="quantifying-how-closely-the-feedback-tracks-the-input">Quantifying how closely the feedback tracks the input</h2> <p>We can derive the relationship between \(S_{fb}\) and \(S_i\) directly.</p> <p>Starting with</p> \[S_{fb} = f S_o\] <p>and</p> \[S_o = a S_\epsilon,\] <p>we have</p> \[S_{fb} = fa S_\epsilon.\] <p>Since</p> \[S_\epsilon = S_i - S_{fb},\] <p>then</p> \[S_{fb} = af(S_i - S_{fb}).\] <p>Using \(T = af\),</p> \[S_{fb} = T(S_i - S_{fb}).\] <p>Rearranging,</p> \[S_{fb}(1+T) = T S_i,\] <p>so</p> \[\frac{S_{fb}}{S_i} = \frac{T}{1+T}.\] <p>When \(T \gg 1\),</p> \[\frac{S_{fb}}{S_i} \approx 1.\] <p>Therefore,</p> \[S_{fb} \approx S_i.\] <p>This makes the previous intuition mathematically precise: <strong>large loop gain forces the feedback signal to become a close replica of the input signal.</strong></p> <p>At the same time, because</p> \[S_\epsilon = S_i - S_{fb},\] <p>a feedback signal that closely tracks the input implies that the error signal must be small.</p> <p>In fact, from the closed-loop relationships,</p> \[\frac{S_\epsilon}{S_i} = \frac{1}{1+T}.\] <p>Thus, for \(T \gg 1\),</p> \[S_\epsilon \ll S_i.\] <p>This is the mechanism by which a large loop gain produces accurate closed-loop behavior: the amplifier does not need a large error signal; its large gain allows a very small error to generate the output required to make the feedback signal track the input.</p> <h2 id="connection-to-deltasigma-adcs">Connection to \(\Delta\Sigma\) ADCs</h2> <p>The same basic feedback intuition appears in \(\Delta\Sigma\) analog-to-digital converters.</p> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/posts/feedback-i-negative-feedback-amplifiers/delta-sigma-loop-480.webp 480w,/assets/img/posts/feedback-i-negative-feedback-amplifiers/delta-sigma-loop-800.webp 800w,/assets/img/posts/feedback-i-negative-feedback-amplifiers/delta-sigma-loop-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/posts/feedback-i-negative-feedback-amplifiers/delta-sigma-loop.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Delta-sigma ADC feedback loop showing integrator, comparator, and 1-bit DAC feedback path" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> <p>In the shown modulator, the quantized output is converted back into an analog feedback signal through the 1-bit DAC and fed to the input summing node. The integrator and comparator form the forward path, while the DAC provides the feedback path.</p> <p>The negative-feedback loop acts to reduce the difference between the input and the feedback signal. As a result, the feedback signal approximates the input over time, with the quantized output switching between the available DAC levels.</p> <p>This is the same fundamental feedback idea seen in the basic amplifier: the loop uses the forward-path gain to act on the difference between the desired input and the feedback signal.</p> <h2 id="takeaway">Takeaway</h2> <p>The basic negative-feedback relationship is</p> \[\boxed{A = \frac{a}{1+af}}\] <p>with loop gain</p> \[\boxed{T = af}.\] <p>When the loop gain is large,</p> \[T \gg 1,\] <p>the closed-loop gain becomes approximately</p> \[\boxed{A \approx \frac{1}{f}},\] <p>while the feedback signal approaches the input:</p> \[\frac{S_{fb}}{S_i} = \frac{T}{1+T} \approx 1.\] <p>The underlying mechanism is simple: <strong>the amplifier amplifies the error, and the amplified error drives the output in a direction that reduces the error through the feedback path.</strong></p> <p>This basic mechanism is what allows feedback to make the overall circuit less dependent on the exact characteristics of the underlying amplifier. The later parts of the series will examine how this same principle can be used to desensitize gain, improve linearity, and extend bandwidth.</p> </div> </article> </div> </div> <div class="col-sm-3"> <nav id="toc-sidebar" class="sticky-top toc toc-sidebar" aria-label="Table of contents" data-toc-collapse="expanded" data-toc-collapse-depth=""></nav> </div> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Rohith Sudarshan Anand . Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Last updated: August 12, 2026. </div> </footer> <script>
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Rohith Sudarshan Anand</span> </a> <button class="navbar-toggler collapsed navbar-toggler-main" type="button" data-nav-toggle="navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse navbar-collapse-main" id="navbarNav"> <ul class="navbar-nav navbar-menu-list flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item active"> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">projects </a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">CV </a> </li> <li class="nav-item"> <button id="search-toggle" type="button" title="Search" aria-label="Open search"> <span class="nav-link">ctrl k <i class="fa-solid fa-magnifying-glass"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" type="button" title="Change theme" aria-label="Change color theme"> <i class="fa-half-sun-moon" id="light-toggle-system"></i> <i class="fa-solid fa-moon" id="light-toggle-dark"></i> <i class="fa-solid fa-sun" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="row"> <div class="col-sm-9"> <div class="post"> <header class="post-header"> <h1 class="post-title">Feedback I: What Negative Feedback Actually Does</h1> <p class="post-meta"> Created on August 12, 2026 </p> <p class="post-tags"> <a href="/blog/2026"> <i class="fa-solid fa-calendar fa-sm"></i> 2026 </a>   ·   <a href="/blog/tag/feedback-series"> <i class="fa-solid fa-hashtag fa-sm"></i> feedback-series</a>   <a href="/blog/tag/analog-design"> <i class="fa-solid fa-hashtag fa-sm"></i> analog-design</a>   <a href="/blog/tag/fundamentals"> <i class="fa-solid fa-hashtag fa-sm"></i> fundamentals</a>   <a href="/blog/tag/amplifiers"> <i class="fa-solid fa-hashtag fa-sm"></i> amplifiers</a>   ·   <a href="/blog/category/analog-design"> <i class="fa-solid fa-tag fa-sm"></i> analog-design</a>   <a href="/blog/category/feedback-series"> <i class="fa-solid fa-tag fa-sm"></i> feedback-series</a> </p> </header> <article class="post-content"> <div id="markdown-content"> <h2 id="why-use-negative-feedback">Why use negative feedback?</h2> <p>One of the most significant benefits of negative feedback in amplifiers is that it makes the closed-loop behavior less sensitive to changes in the underlying amplifier. For example, the open-loop gain can vary with supply voltage, temperature, process variation, device mismatch, and aging. Negative feedback can reduce the extent to which these variations appear in the overall closed-loop gain.</p> <p>Feedback also gives the designer a way to control properties such as the input and output impedances of the overall circuit. In the idealized feedback framework, these closed-loop properties can be controlled through the feedback configuration while the underlying amplifier properties are treated separately.</p> <p>Feedback can also be used deliberately to extend amplifier bandwidth, which will be explored later in the series.</p> <p>The main tradeoff is that negative feedback reduces the closed-loop gain relative to the open-loop gain. In practice, this loss of gain can be compensated for by using additional amplifier stages when necessary.</p> <h2 id="the-basic-negative-feedback-configuration">The basic negative-feedback configuration</h2> <p>Consider the basic feedback configuration below.</p> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/posts/feedback-i-negative-feedback-amplifiers/basic-feedback-loop-480.webp 480w,/assets/img/posts/feedback-i-negative-feedback-amplifiers/basic-feedback-loop-800.webp 800w,/assets/img/posts/feedback-i-negative-feedback-amplifiers/basic-feedback-loop-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/posts/feedback-i-negative-feedback-amplifiers/basic-feedback-loop.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Block diagram of the basic negative-feedback configuration showing the summing node, amplifier gain a, and feedback network f" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> <p>The system consists of four main elements:</p> <ul> <li>\(S_i\): input signal.</li> <li>\(S_\epsilon\): error signal applied to the basic amplifier.</li> <li>\(a\): open-loop gain of the basic amplifier.</li> <li>\(S_o\): output signal.</li> <li>\(f\): feedback factor of the feedback network.</li> <li>\(S_{fb}\): feedback signal returned to the input summing node.</li> </ul> <p>The feedback is <strong>negative</strong> because the feedback signal is subtracted from the input signal at the summing node.</p> <p>The key idea is that the amplifier does not directly amplify \(S_i\). It amplifies the <strong>error signal</strong> \(S_\epsilon\) created by the difference between the input and the feedback signal.</p> <p>This gives the two fundamental relationships:</p> \[S_o = a S_\epsilon\] <p>and</p> \[S_\epsilon = S_i - S_{fb}.\] <p>The feedback network, in turn, produces a fraction of the output:</p> \[S_{fb} = f S_o.\] <p>Substituting the error equation into the amplifier equation gives</p> \[S_o = a(S_i - S_{fb})\] <p>or, using \(S_{fb} = f S_o\),</p> \[S_o = a S_i - a f S_o.\] <p>Rearranging,</p> \[S_o (1 + af) = a S_i.\] <p>Therefore, the closed-loop gain is</p> \[A \equiv \frac{S_o}{S_i} = \frac{a}{1+af}.\] <p>This is the fundamental negative-feedback equation for the basic model.</p> <h2 id="open-loop-gain-closed-loop-gain-and-loop-gain">Open-loop gain, closed-loop gain, and loop gain</h2> <p>Here, \(a\) is the <strong>open-loop gain</strong>: the gain of the basic amplifier when the feedback loop is not closed.</p> <p>Once the feedback path is included, the overall gain becomes the <strong>closed-loop gain</strong>, which we denote by \(A\):</p> \[A = \frac{S_o}{S_i} = \frac{a}{1+af}.\] <p>It is also useful to define</p> \[T = af\] <p>and call \(T\) the <strong>loop gain</strong> for this basic feedback model. It represents the product of the forward-path gain and the feedback factor around the loop.</p> <p>The closed-loop gain can then be written as</p> <p>\begin{equation} \label{eq:closed-loop-gain} A = \frac{a}{1+T}. \end{equation}</p> <p>This equation is the starting point for understanding why feedback is so useful.</p> <h2 id="what-happens-when-the-loop-gain-is-large">What happens when the loop gain is large?</h2> <p>Suppose</p> \[T = af \gg 1.\] <p>Then \(1 + af \approx af\), so</p> \[A = \frac{a}{1+af} \approx \frac{a}{af} = \frac{1}{f}.\] <p>Thus, when the loop gain is sufficiently large, the closed-loop gain is approximately determined by the feedback factor:</p> \[\boxed{A \approx \frac{1}{f}}.\] <p>This is extremely useful because the open-loop gain \(a\) is generally difficult to control precisely. It can depend strongly on process variations, device mismatch, supply conditions, temperature, and other changes in the underlying circuit.</p> <p>The feedback factor \(f\), on the other hand, can often be made much easier to control, particularly when it is implemented using relatively well-controlled passive components.</p> <p>Therefore, negative feedback allows us to build a circuit whose overall gain is determined primarily by the feedback network rather than by the exact value of the underlying amplifier gain.</p> <p>The important point is that the approximation \(A \approx 1/f\) is not true merely because feedback is present. It requires sufficiently large loop gain:</p> \[af \gg 1.\] <h2 id="why-does-the-feedback-signal-approach-the-input">Why does the feedback signal approach the input?</h2> <p>The equations above also give a more intuitive picture of what the feedback loop is doing.</p> <p>The amplifier amplifies the error:</p> \[S_\epsilon = S_i - S_{fb}\] <p>and therefore</p> \[S_o = a S_\epsilon.\] <p>The feedback network then generates</p> \[S_{fb} = f S_o.\] <p>Now consider what happens if the feedback signal is initially smaller than the input:</p> \[S_{fb} &lt; S_i.\] <p>The error signal is positive and relatively large:</p> \[S_\epsilon = S_i - S_{fb}.\] <p>The amplifier therefore produces a larger output, which causes the feedback network to produce a larger \(S_{fb}\). This reduces the difference between \(S_i\) and \(S_{fb}\).</p> <p>Conversely, if the feedback signal becomes larger than the input,</p> \[S_{fb} &gt; S_i,\] <p>then the error signal changes in the opposite direction. The amplifier output and consequently the feedback signal are driven back toward the input.</p> <p>So the feedback loop continually acts to reduce the error between the input and feedback signals.</p> <p>This is the central intuition behind negative feedback:</p> <blockquote> <p><strong>The amplifier amplifies the error, and the resulting output is fed back in such a way that the error is reduced.</strong></p> </blockquote> <p>The feedback signal is therefore not made equal to the input by some independent mechanism. Rather, the loop gain causes even a small difference between them to produce a corrective output that pushes the feedback signal toward the input.</p> <h2 id="quantifying-how-closely-the-feedback-tracks-the-input">Quantifying how closely the feedback tracks the input</h2> <p>We can derive the relationship between \(S_{fb}\) and \(S_i\) directly.</p> <p>Starting with</p> \[S_{fb} = f S_o\] <p>and</p> \[S_o = a S_\epsilon,\] <p>we have</p> \[S_{fb} = fa S_\epsilon.\] <p>Since</p> \[S_\epsilon = S_i - S_{fb},\] <p>then</p> \[S_{fb} = af(S_i - S_{fb}).\] <p>Using \(T = af\),</p> \[S_{fb} = T(S_i - S_{fb}).\] <p>Rearranging,</p> \[S_{fb}(1+T) = T S_i,\] <p>so</p> \[\frac{S_{fb}}{S_i} = \frac{T}{1+T}.\] <p>When \(T \gg 1\),</p> \[\frac{S_{fb}}{S_i} \approx 1.\] <p>Therefore,</p> \[S_{fb} \approx S_i.\] <p>This makes the previous intuition mathematically precise: <strong>large loop gain forces the feedback signal to become a close replica of the input signal.</strong></p> <p>At the same time, because</p> \[S_\epsilon = S_i - S_{fb},\] <p>a feedback signal that closely tracks the input implies that the error signal must be small.</p> <p>In fact, from the closed-loop relationships,</p> \[\frac{S_\epsilon}{S_i} = \frac{1}{1+T}.\] <p>Thus, for \(T \gg 1\),</p> \[S_\epsilon \ll S_i.\] <p>This is the mechanism by which a large loop gain produces accurate closed-loop behavior: the amplifier does not need a large error signal; its large gain allows a very small error to generate the output required to make the feedback signal track the input.</p> <h2 id="connection-to-deltasigma-adcs">Connection to \(\Delta\Sigma\) ADCs</h2> <p>The same basic feedback intuition appears in \(\Delta\Sigma\) analog-to-digital converters.</p> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/posts/feedback-i-negative-feedback-amplifiers/delta-sigma-loop-480.webp 480w,/assets/img/posts/feedback-i-negative-feedback-amplifiers/delta-sigma-loop-800.webp 800w,/assets/img/posts/feedback-i-negative-feedback-amplifiers/delta-sigma-loop-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/posts/feedback-i-negative-feedback-amplifiers/delta-sigma-loop.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Delta-sigma ADC feedback loop showing integrator, comparator, and 1-bit DAC feedback path" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> <p>In the shown modulator, the quantized output is converted back into an analog feedback signal through the 1-bit DAC and fed to the input summing node. The integrator and comparator form the forward path, while the DAC provides the feedback path.</p> <p>The negative-feedback loop acts to reduce the difference between the input and the feedback signal. As a result, the feedback signal approximates the input over time, with the quantized output switching between the available DAC levels.</p> <p>This is the same fundamental feedback idea seen in the basic amplifier: the loop uses the forward-path gain to act on the difference between the desired input and the feedback signal.</p> <h2 id="takeaway">Takeaway</h2> <p>The basic negative-feedback relationship is</p> \[\boxed{A = \frac{a}{1+af}}\] <p>with loop gain</p> \[\boxed{T = af}.\] <p>When the loop gain is large,</p> \[T \gg 1,\] <p>the closed-loop gain becomes approximately</p> \[\boxed{A \approx \frac{1}{f}},\] <p>while the feedback signal approaches the input:</p> \[\frac{S_{fb}}{S_i} = \frac{T}{1+T} \approx 1.\] <p>The underlying mechanism is simple: <strong>the amplifier amplifies the error, and the amplified error drives the output in a direction that reduces the error through the feedback path.</strong></p> <p>This basic mechanism is what allows feedback to make the overall circuit less dependent on the exact characteristics of the underlying amplifier. The later parts of the series will examine how this same principle can be used to desensitize gain, improve linearity, and extend bandwidth.</p> <h2 id="references">References</h2> <ol> <li>Notes from ECE 483 Analog IC Design (Prof. Pavan Kumar Hanumolu) @ UIUC</li> <li>Gray, P. R. (2009). <em>Analysis and Design of Analog Integrated Circuits</em>, 5th ed.</li> <li>Razavi, Behzad. <em>Design of Analog CMOS Integrated Circuits</em>, 2nd ed.</li> </ol> </div> </article> <br> <hr> <br> If you found this useful, please cite this as: <blockquote> <p>, Rohith Sudarshan Anand (Aug 2026). Feedback I: What Negative Feedback Actually Does. https://rsanand318.github.io.</p> </blockquote> <p>or as a BibTeX entry:</p> <div class="language-bibtex highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">@article</span><span class="p">{</span><span class="nl">2026feedback-i-what-negative-feedback-actually-does</span><span class="p">,</span>
+  <span class="na">title</span>   <span class="p">=</span> <span class="s">{Feedback I: What Negative Feedback Actually Does}</span><span class="p">,</span>
+  <span class="na">author</span>  <span class="p">=</span> <span class="s">{, Rohith Sudarshan Anand}</span><span class="p">,</span>
+  <span class="na">year</span>    <span class="p">=</span> <span class="s">{2026}</span><span class="p">,</span>
+  <span class="na">month</span>   <span class="p">=</span> <span class="s">{Aug}</span><span class="p">,</span>
+  <span class="na">url</span>     <span class="p">=</span> <span class="s">{https://rsanand318.github.io/blog/2026/feedback-i-negative-feedback-amplifiers/}</span>
+<span class="p">}</span>
+</code></pre></div></div> <div id="disqus_thread" style="max-width: 930px; margin: 0 auto;"> <script type="text/javascript">
+    var disqus_shortname  = "al-folio";
+    var disqus_identifier = "/blog/2026/feedback-i-negative-feedback-amplifiers";
+    var disqus_title      = "Feedback I: What Negative Feedback Actually Does";
+    (function() {
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script> <noscript> Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="external nofollow noopener" target="_blank">comments powered by Disqus.</a> </noscript> </div> </div> </div> <div class="col-sm-3"> <nav id="toc-sidebar" class="sticky-top toc toc-sidebar" aria-label="Table of contents" data-toc-collapse="expanded" data-toc-collapse-depth=""></nav> </div> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Rohith Sudarshan Anand . Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Last updated: August 12, 2026. </div> </footer> <script>
   window.alFolio = {
     compatBootstrap: false
   };
@@ -72,28 +90,6 @@ ninja.data = [{
             window.location.href = "/blog/2026/feedback-distortion-in-analog-circuits/";
           
         },
-      },{id: "post-a-post-with-plotly-js",
-        
-          title: "a post with plotly.js",
-        
-        description: "this is what included plotly.js code could look like",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2025/plotly/";
-          
-        },
-      },{id: "post-a-post-with-image-galleries",
-        
-          title: "a post with image galleries",
-        
-        description: "this is what included image galleries could look like",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2024/photo-gallery/";
-          
-        },
       },{id: "post-google-gemini-updates-flash-1-5-gemma-2-and-project-astra",
         
           title: 'Google Gemini updates: Flash 1.5, Gemma 2 and Project Astra <svg width="1.2rem" height="1.2rem" top=".5rem" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
@@ -105,105 +101,6 @@ ninja.data = [{
             window.open("https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/", "_blank");
           
         },
-      },{id: "post-a-post-with-tabs",
-        
-          title: "a post with tabs",
-        
-        description: "this is what included tabs in a post could look like",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2024/tabs/";
-          
-        },
-      },{id: "post-a-post-that-can-be-cited",
-        
-          title: "a post that can be cited",
-        
-        description: "this is what a post that can be cited looks like",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2024/post-citation/";
-          
-        },
-      },{id: "post-a-post-with-advanced-image-components",
-        
-          title: "a post with advanced image components",
-        
-        description: "this is what advanced image components could look like",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2024/advanced-images/";
-          
-        },
-      },{id: "post-a-post-with-echarts",
-        
-          title: "a post with echarts",
-        
-        description: "this is what included echarts code could look like",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2024/echarts/";
-          
-        },
-      },{id: "post-a-post-with-bibliography",
-        
-          title: "a post with bibliography",
-        
-        description: "an example of a blog post with bibliography",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2023/post-bibliography/";
-          
-        },
-      },{id: "post-a-post-with-audios",
-        
-          title: "a post with audios",
-        
-        description: "this is what included audios could look like",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2023/audios/";
-          
-        },
-      },{id: "post-a-post-with-videos",
-        
-          title: "a post with videos",
-        
-        description: "this is what included videos could look like",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2023/videos/";
-          
-        },
-      },{id: "post-displaying-beautiful-interactive-tables",
-        
-          title: "displaying beautiful interactive tables",
-        
-        description: "an example of how to use interactive tables in al-folio",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2023/tables/";
-          
-        },
-      },{id: "post-a-post-with-table-of-contents",
-        
-          title: "a post with table of contents",
-        
-        description: "an example of a blog post with table of contents",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2023/table-of-contents/";
-          
-        },
       },{id: "post-displaying-external-posts-on-your-al-folio-blog",
         
           title: 'Displaying External Posts on Your al-folio Blog <svg width="1.2rem" height="1.2rem" top=".5rem" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
@@ -213,83 +110,6 @@ ninja.data = [{
         handler: () => {
           
             window.open("https://medium.com/@al-folio/displaying-external-posts-on-your-al-folio-blog-b60a1d241a0a?source=rss-17feae71c3c4------2", "_blank");
-          
-        },
-      },{id: "post-a-post-with-redirect",
-        
-          title: "a post with redirect",
-        
-        description: "you can also redirect to assets like pdf",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/assets/pdf/example_pdf.pdf";
-          
-        },
-      },{id: "post-a-post-with-diagrams",
-        
-          title: "a post with diagrams",
-        
-        description: "an example of a blog post with diagrams",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2021/diagrams/";
-          
-        },
-      },{id: "post-a-distill-style-blog-post",
-        
-          title: "a distill-style blog post",
-        
-        description: "an example of a distill-style blog post and main elements",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2021/distill/";
-          
-        },
-      },{id: "post-a-post-with-disqus-comments",
-        
-          title: "a post with disqus comments",
-        
-        description: "an example of a blog post with disqus comments",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2015/disqus-comments/";
-          
-        },
-      },{id: "post-a-post-with-math",
-        
-          title: "a post with math",
-        
-        description: "an example of a blog post with some math",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2015/math/";
-          
-        },
-      },{id: "post-a-post-with-code",
-        
-          title: "a post with code",
-        
-        description: "an example of a blog post with some code",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2015/code/";
-          
-        },
-      },{id: "post-a-post-with-images",
-        
-          title: "a post with images",
-        
-        description: "this is what included images could look like",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2015/images/";
           
         },
       },{id: "books-the-godfather",
