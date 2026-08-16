@@ -7,7 +7,7 @@ tags: feedback-series analog-design fundamentals amplifiers
 categories: analog-design feedback-series
 related_posts: false
 citation: true
-disqus_comments: true
+# disqus_comments: true
 toc:
   sidebar: right
 ---
