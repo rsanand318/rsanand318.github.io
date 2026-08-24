@@ -1,9 +1,8 @@
-{% comment %} filename: 2026-08-24-ldo-design-part-1-fundamentals.md {% endcomment %}
 ---
 layout: post
 title: "LDO Design Part I: Fundamentals of Linear Regulators"
 date: 2026-08-24 12:30:00 -0400
-description: "A first-principles motivation for the LDO, built up from the resistor divider through the switched DC-DC converter and its ripple problem."
+description: "A first-principles motivation for the LDO"
 tags: ldo-design analog power-management circuits
 categories: circuit-design analog
 related_posts: true
@@ -65,7 +64,7 @@ This is a very simple solution, and in many situations simplicity is exactly wha
 
 ### Problem 1: Load regulation
 
-The divider equation above assumes the load draws negligible current, i.e., that it does not change the effective resistance at the output node. In reality, the load resistance $$R_L$$ sits in parallel with $$R_2$$ (or, depending on the topology in the note above, *is* the bottom leg), so the actual divide ratio becomes a function of $$R_2 \parallel R_L$$ rather than a fixed value.
+The divider equation above assumes the load draws negligible current, i.e., that it does not change the effective resistance at the output node. In reality, the load resistance $$R_L$$ sits in parallel with $$R_2$$ (or, depending on the topology in the note above, _is_ the bottom leg), so the actual divide ratio becomes a function of $$R_2 \parallel R_L$$ rather than a fixed value.
 
 If the circuit's current demand increases (i.e., $$R_L$$ decreases), $$R_2 \parallel R_L$$ decreases, and the output voltage sags below the intended 1.2 V. The fixed resistor ratio has no way to compensate for this, because it has no feedback path that senses $$V_{OUT}$$ and adjusts anything in response — it's a purely passive, open-loop network. So we do not get good load regulation.
 
@@ -83,7 +82,7 @@ Some of the power coming from the battery is therefore turned into heat instead 
 
 Capacitors and inductors are useful as filters. A key observation: if we take a periodic waveform and pass it through a low-pass filter, the filter removes the high-frequency components and leaves us with the average (DC) component.
 
-So instead of directly dividing 2.4 V with resistors, what if we convert the 2.4 V into a periodic waveform whose *average* is 1.2 V, and then filter that waveform? This is the basic idea behind a switched DC-DC converter.
+So instead of directly dividing 2.4 V with resistors, what if we convert the 2.4 V into a periodic waveform whose _average_ is 1.2 V, and then filter that waveform? This is the basic idea behind a switched DC-DC converter.
 
 Imagine switching the battery node between $$V_{BAT}$$ and ground at the switch node, then low-pass filtering with an LC network. If the switching waveform has duty cycle $$D$$, the average (DC) value at the switch node is
 
@@ -221,7 +220,7 @@ The LDO should suppress the ripple coming from the DC-DC converter. This is part
 
 At first it seems like we could simply cascade another switched DC-DC converter after the first one, for another filtering/regulation stage. The problem is area and complexity: on-chip DC-DC converters require relatively large inductors and capacitors compared with normal CMOS circuitry (Section 6), so we do not want to keep adding switched converters everywhere just to clean up one more stage of ripple.
 
-Instead, we want a much simpler circuit for the final regulation and filtering stage. This brings us back toward the spirit of the resistor divider — a relatively simple circuit that sets the output voltage — but now we need something better than a *passive* resistor divider, because we saw in Section 2 that a passive divider has no way to correct for load or input variation. We need a circuit that can **actively regulate** the output. That is essentially what an LDO does.
+Instead, we want a much simpler circuit for the final regulation and filtering stage. This brings us back toward the spirit of the resistor divider — a relatively simple circuit that sets the output voltage — but now we need something better than a _passive_ resistor divider, because we saw in Section 2 that a passive divider has no way to correct for load or input variation. We need a circuit that can **actively regulate** the output. That is essentially what an LDO does.
 
 ## 11. The overall picture
 
@@ -265,6 +264,7 @@ Post image directory:
 assets/img/posts/ldo-design-part-1-fundamentals/
 
 Required files:
+
 1. Source/role: Section 1 opening diagram showing the overall power-management chain (Battery → DC-DC Converter → LDOs → Individual Circuit Blocks)
    Exact filename: power-management-block-diagram.png
    Exact repository path: assets/img/posts/ldo-design-part-1-fundamentals/power-management-block-diagram.png
@@ -281,6 +281,7 @@ Thumbnail, if used:
 None — no suitable thumbnail image was supplied in the source notes, so the thumbnail field has been omitted from the front matter.
 
 Deployment checks:
+
 - Confirm every listed file exists at its exact case-sensitive path.
 - Confirm every image include path in the article matches the manifest exactly.
 - Confirm the thumbnail path, if present, matches a real file.
