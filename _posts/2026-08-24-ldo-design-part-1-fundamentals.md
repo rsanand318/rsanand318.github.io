@@ -12,7 +12,7 @@ citation: true
 disqus_comments: false
 ---
 
-## I Why do we need an LDO?
+## Why do we need an LDO?
 
 A typical power management system looks something like this:
 
@@ -30,7 +30,7 @@ This becomes even more important in modern processes such as BiCMOS, where diffe
 
 Obviously, we do not want a separate battery for every circuit block. We need a circuit that can take the battery voltage and generate stable supply voltages for the different blocks.
 
-## II First attempt: the resistor divider
+## II The Resistor Divider
 
 Let's first simplify the problem. Assume the battery provides a constant
 
@@ -78,7 +78,7 @@ $$
 
 Some of the power coming from the battery is therefore turned into heat instead of reaching the load. Ideally we want most of the input power to make it to the circuit — this is what motivates looking at elements that ideally do not dissipate power, such as capacitors and inductors.
 
-## III Using capacitors and inductors: the DC-DC converter
+## III LC-Based DC-DC converter
 
 Capacitors and inductors are useful as filters. A key observation: if we take a periodic waveform and pass it through a low-pass filter, the filter removes the high-frequency components and leaves us with the average (DC) component.
 
@@ -104,7 +104,7 @@ $$
 
 The two switches are driven by complementary clock signals, $$CLK$$ and $$\overline{CLK}$$, so that one connects the switch node to $$V_{BAT}$$ while the other connects it to ground, and vice versa. The switch-node waveform is therefore a square wave, not a clean DC voltage — the LC filter's job is to remove most of the switching-frequency components and pass through approximately the DC/average value. This is the basic operating principle of a buck converter.
 
-## IV Why is this much better than a resistor divider?
+## Why is this much better than a resistor divider?
 
 The important advantage is efficiency. With the resistor divider, we are deliberately dissipating power in resistors to drop the excess voltage. With an ideal switched converter, the switches, capacitors, and inductors can theoretically transfer energy with very little loss, because ideal switches and reactive elements do not dissipate power the way a resistor does.
 
@@ -121,7 +121,7 @@ But the efficiency can still be much higher than simply burning off the excess v
 
 So now we have an efficient way to convert the battery voltage down to a lower voltage.
 
-## V But there is a problem: ripple
+## Ripple
 
 The output of the switched converter is not perfectly DC. The switch-node waveform contains the fundamental switching frequency and its harmonics. The LC filter suppresses these high-frequency components, but — being a real, finite-order filter — it cannot remove all of them. So the output looks more like
 
@@ -133,7 +133,7 @@ where $$V_{DC}$$ is the desired average voltage and $$v_{ripple}(t)$$ is the res
 
 This may be acceptable for some loads, but it can be a real problem for sensitive analog, RF, and mixed-signal circuits, which are exactly the blocks that need a quiet supply in the first place.
 
-## VI Why can't we simply make the LC filter much better?
+## Why can't we simply make the LC filter much better?
 
 In principle, we could make the low-pass filter much more aggressive so that almost all of the switching harmonics are removed. The problem is the required component values and physical area.
 
@@ -152,7 +152,7 @@ So there is a practical tradeoff:
 
 We therefore cannot simply make the filter arbitrarily sharp without cost.
 
-## VII Why not just increase the switching frequency?
+## Why not just increase the switching frequency?
 
 At first this looks like the obvious fix: raise $$f_{SW}$$ (say, toward 1 GHz) so the switching harmonics sit far from DC, and a much smaller filter can suppress them. But now the switches themselves become difficult to operate well.
 
@@ -172,7 +172,7 @@ $$
 
 This is one of the basic practical tradeoffs in a high-frequency switched converter: pushing $$f_{SW}$$ up to shrink the passive filter components pushes switching and driver losses up at the same time. So in practice, both the switching frequency and the passive component sizes are chosen at a reasonable operating point rather than pushed to an extreme in either direction.
 
-## VIII The practical DC-DC output
+## The practical DC-DC output
 
 Because of these practical limitations, a real DC-DC converter produces something like
 
@@ -184,7 +184,7 @@ rather than a perfectly clean DC voltage. The average value can be very well con
 
 For a power-management system, this is often acceptable at the first stage, because the DC-DC converter's main job is power efficiency, not precision. However, sensitive circuit blocks need a much cleaner supply than this. This is where the LDO comes in.
 
-## IX What is the LDO actually doing?
+## What is the LDO actually doing?
 
 The basic idea is:
 
@@ -216,13 +216,13 @@ The output should stay close to the desired voltage even when:
 
 The LDO should suppress the ripple coming from the DC-DC converter. This is particularly important for sensitive analog, RF, and mixed-signal circuits.
 
-## X Why not use another DC-DC converter?
+## Why not use another DC-DC converter?
 
 At first it seems like we could simply cascade another switched DC-DC converter after the first one, for another filtering/regulation stage. The problem is area and complexity: on-chip DC-DC converters require relatively large inductors and capacitors compared with normal CMOS circuitry (Section 6), so we do not want to keep adding switched converters everywhere just to clean up one more stage of ripple.
 
 Instead, we want a much simpler circuit for the final regulation and filtering stage. This brings us back toward the spirit of the resistor divider — a relatively simple circuit that sets the output voltage — but now we need something better than a _passive_ resistor divider, because we saw in Section 2 that a passive divider has no way to correct for load or input variation. We need a circuit that can **actively regulate** the output. That is essentially what an LDO does.
 
-## XI The overall picture
+## The overall picture
 
 The power-management chain can be understood as two stages with different jobs:
 
