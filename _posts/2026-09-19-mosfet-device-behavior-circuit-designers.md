@@ -1,6 +1,4 @@
-{% comment %} filename: 2026-09-19-mosfet-device-behavior-circuit-designers.md {% endcomment %}
-
-***
+---
 layout: post
 title: "MOSFET Device Behavior for Circuit Designers"
 date: 2026-09-19 18:00:00 -0400
@@ -13,7 +11,7 @@ toc:
 thumbnail: assets/img/posts/mosfet-device-behavior-circuit-designers/mosfet-cross-section.png
 citation: true
 <!-- gisqus_comments: true -->
-***
+---
 
 Metal-Oxide-Semiconductor Field-Effect Transistors, or MOSFETs, are used extensively in modern chip designs, because they allow high device density and low power dissipation. As this technology lends itself to digital integrated circuits well, it has become a necessity for analog designers to design high-precision, low-noise, and wideband circuits with MOSFETs rather than bipolar transistors (such as BJTs) and other technologies which have better performance characteristics for analog circuits than MOSFETs — such as higher transconductance for the same bias current, lower noise, etc. Therefore, it is necessary to study the fundamental behavior of MOSFET devices to gain the intuition for using them appropriately in larger circuits.
 
