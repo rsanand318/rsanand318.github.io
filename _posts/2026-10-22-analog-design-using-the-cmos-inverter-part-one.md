@@ -69,7 +69,7 @@ The NMOS begins to conduct strongly when $V_{in}$ exceeds $V_{TN}$. The PMOS rem
 
 **Region D: NMOS in triode, PMOS in saturation.** As the output falls further, the NMOS drain-source voltage eventually becomes smaller than its overdrive. The NMOS enters triode, while the PMOS can remain in saturation. The output is now close to ground, and further increases in input mainly strengthen the pull-down path.
 
-**Region E: PMOS nominally off, NMOS in triode.** When $V_{in}\geq V_{DD}-|V_{TP}|$, the PMOS is off in the ideal cutoff model. The NMOS pulls the output toward ground. As in Region A, practical leakage and short-channel effects soften the ideal transition.
+**Region E: PMOS nominally off, NMOS in triode.** When $V_{in}\geq V_{DD}-|V_{TP}|$, the PMOS is off in the ideal cutoff model. The NMOS pulls the output toward ground. As in Region A, practical leakage and short-channel effects soften the ideal transition. 
 
 ### Deriving the input trip-point
 
