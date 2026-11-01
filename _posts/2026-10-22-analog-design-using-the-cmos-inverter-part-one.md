@@ -1,4 +1,4 @@
----
+<!-- ---
 layout: post
 title: "Analog Design Using The CMOS Inverter -- Part 1"
 date: 2026-10-22 18:00:00 -0400
@@ -331,4 +331,4 @@ For applications that require only AC amplification, it is common to isolate the
 
 [1] Analog Circuits By Prof. Shanti Pavan on YouTube (https://www.youtube.com/watch?v=WWWvibZdL70)
 [2] W. Bae, “CMOS Inverter as Analog Circuit: An Overview,” *Journal of Low Power Electronics and Applications*, vol. 9, no. 3, article 26, 2019. https://doi.org/10.3390/jlpea9030026
-[3] B. Razavi, "Fifty Applications of the CMOS Inverter—Parts 1-5 [The Analog Mind]," in _IEEE Solid-State Circuits Magazine_.
+[3] B. Razavi, "Fifty Applications of the CMOS Inverter—Parts 1-5 [The Analog Mind]," in _IEEE Solid-State Circuits Magazine_. -->
