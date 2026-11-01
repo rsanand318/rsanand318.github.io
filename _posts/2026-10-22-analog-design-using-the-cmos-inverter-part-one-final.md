@@ -1,27 +1,14 @@
 ---
-
 layout: post
-
 title: "Analog Design Using The CMOS Inverter -- Part 1"
-
 date: 2026-10-22 18:00:00 -0400
-
 description: "Introduction, VTC, and Resistive Feedback Inverter For High-Speed"
-
 tags: [mixed-signal, CMOS, analog, inverter, high-speed]
-
 categories: [analog-design, mixed-signal]
-
 related_posts: true
-
 toc:
-
   sidebar: right
-
-# thumbnail: assets/img/posts/mosfet-device-behavior-circuit-designers/mosfet-cross-section.png
-
-citation: false
-
+citation: true
 ---
 
 Technology scaling has been extraordinarily effective for digital circuits. Smaller devices and lower supply voltages have enabled higher density and switching speed, while process development has continued to improve the trade-off between on-state current and leakage. Analog design has benefited from the same technology, but not always in the same way.
