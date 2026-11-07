@@ -1,0 +1,243 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> PVT-Tolerant CMOS Inverter Amplifiers Using Ring-Oscillator-Based Dynamic Voltage Scaling | Rohith Sudarshan Anand </title> <meta name="author" content="Rohith Sudarshan Anand "> <meta name="description" content="How a replica ring oscillator, a frequency counter, and a programmable LDO form a feedback loop that keeps the bandwidth of self-biased CMOS inverter amplifiers stable across process, voltage, and temperature."> <meta name="keywords" content="analog design , mixed signal circuits, high-speed circuits, ADCs, transceivers, RFIC design"> <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; media-src 'self' https:; frame-src 'self' https:; connect-src 'self' https:;"> <style>
+  :root {
+    --max-content-width: 930px;
+  }
+</style> <link rel="stylesheet" href="/assets/css/tailwind.css?v=50c64c15cbb9fd1ce6056fdb8bcb4b62"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tocbot@4.36.4/dist/tocbot.css" integrity="sha256-zTN0r+0OKaIv2xqeNNIYxNk0pWJ6+IqPGc1iDgVzWF0=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css" integrity="sha256-MVopmdyC2tYTiJ8wlktf0uh0v4NgT+vNdyVFepi7Q0c=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.5/css/academicons.min.css" integrity="sha256-SzrCOBJbGVFMahewkgjwnApaV2+av1DwMAA+/QGLyZw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/scholar-icons@1.0.3/css/scholar-icons.css" integrity="sha256-VY3hHVj/hNX3fYG6wtbA6TcKJQl7+FthzGSyIB64klY=" crossorigin="anonymous"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?v=591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%F0%9F%90%85&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css?v=3116ba77db9ee1581d05bb3e86fbf7f1"> <link rel="canonical" href="https://rsanand318.github.io/blog/2026/pvt-tolerant-inverter-amplifier-dvs/"> <script src="/assets/js/theme.js?v=5286c3e4c334d0ecb8fc0c40ff4fa7ec"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?v=5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Rohith Sudarshan Anand</span> </a> <button class="navbar-toggler collapsed navbar-toggler-main" type="button" data-nav-toggle="navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse navbar-collapse-main" id="navbarNav"> <ul class="navbar-nav navbar-menu-list flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item active"> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">CV </a> </li> <li class="nav-item"> <button id="search-toggle" type="button" title="Search" aria-label="Open search"> <span class="nav-link">ctrl k <i class="fa-solid fa-magnifying-glass"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" type="button" title="Change theme" aria-label="Change color theme"> <i class="fa-half-sun-moon" id="light-toggle-system"></i> <i class="fa-solid fa-moon" id="light-toggle-dark"></i> <i class="fa-solid fa-sun" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="row"> <div class="col-sm-9"> <div class="post"> <header class="post-header"> <h1 class="post-title">PVT-Tolerant CMOS Inverter Amplifiers Using Ring-Oscillator-Based Dynamic Voltage Scaling</h1> <p class="post-meta"> Created on November 07, 2026 </p> <p class="post-tags"> <a href="/blog/2026"> <i class="fa-solid fa-calendar fa-sm"></i> 2026 </a>   ·   <a href="/blog/tag/analog"> <i class="fa-solid fa-hashtag fa-sm"></i> analog</a>   <a href="/blog/tag/cmos"> <i class="fa-solid fa-hashtag fa-sm"></i> cmos</a>   <a href="/blog/tag/inverter-amplifier"> <i class="fa-solid fa-hashtag fa-sm"></i> inverter-amplifier</a>   <a href="/blog/tag/pvt"> <i class="fa-solid fa-hashtag fa-sm"></i> pvt</a>   <a href="/blog/tag/ldo"> <i class="fa-solid fa-hashtag fa-sm"></i> ldo</a>   <a href="/blog/tag/ring-oscillator"> <i class="fa-solid fa-hashtag fa-sm"></i> ring-oscillator</a>   <a href="/blog/tag/dynamic-voltage-scaling"> <i class="fa-solid fa-hashtag fa-sm"></i> dynamic-voltage-scaling</a>   ·   <a href="/blog/category/analog-ic-design"> <i class="fa-solid fa-tag fa-sm"></i> analog-ic-design</a> </p> </header> <article class="post-content"> <div id="markdown-content"> <h2 id="the-cmos-inverter-as-an-amplifier">The CMOS inverter as an amplifier</h2> <p>The CMOS inverter, biased at mid-supply (\(V_{DD}/2\)) for maximum gain linearity, offers several benefits as an amplifier building block [1]:</p> <ol> <li>The input drives both devices, so the transconductances add: \(g_m = g_{mn} + g_{mp}\).</li> <li>It operates in class AB, which is more power efficient than a class-A stage.</li> <li>It has only one input node and one output node, so there are fewer parasitic poles to deal with than in, say, a folded-cascode stage.</li> <li>It offers the highest output swing for a given supply.</li> </ol> <p>The push-pull action is also what makes the stage linear. Writing the large-signal output current as the difference of the NMOS and PMOS currents,</p> \[i_o = i_n - i_p = \left[k_n V_{OV,n} + k_p V_{OV,p}\right] v_i + \frac{1}{2}\left(k_n - k_p\right) v_i^2\] <p>where \(k = \mu C_{ox} W/L\) is the conductance constant of each device and \(V_{OV}\) its overdrive. Notice that the square term is proportional to \(k_n - k_p\). If we size \(W_n\) and \(W_p\) such that \(k_n = k_p\), the square term cancels and the output current becomes a linear function of \(v_i\), which is a rather nice result for a two-transistor circuit. Even with some mismatch, the second-order term is only proportional to the difference in the \(k\) values [1].</p> <h2 id="noise-first-linearity-last">Noise first, linearity last</h2> <p>In practice, the amplifier is implemented as a cascade of gain stages. The noise requirement of the first stage matters the most. For \(n\) cascaded stages, the Friis equation gives the total noise factor as [4]</p> \[F_{total} = F_1 + \frac{F_2 - 1}{G_1} + \frac{F_3 - 1}{G_1 G_2} + \cdots + \frac{F_n - 1}{G_1 G_2 \cdots G_{n-1}}\] <p>where \(F_i\) is the (linear) noise factor of stage \(i\), with \(NF_i = 10\log_{10} F_i\), and \(G_i\) is its available power gain. Notice that the excess noise of each stage is divided by the total gain that precedes it, so after a reasonably high-gain first stage, the later stages contribute little.</p> <p>Meanwhile, the signal swing grows from stage to stage, so linearity becomes more and more important further down the chain. Assuming third-order nonlinearity dominates and neglecting any phase cancellation between distortion components, the cascaded input-referred intercept is approximately [4]</p> \[\frac{1}{A_{IIP3,total}^2} \approx \frac{1}{A_{IIP3,1}^2} + \frac{1}{A_{v1}^2 A_{IIP3,2}^2} + \frac{1}{A_{v1}^2 A_{v2}^2 A_{IIP3,3}^2} + \cdots\] <p>where \(A_{IIP3,i}\) is the input intercept amplitude of stage \(i\) and \(A_{vi}\) its voltage gain. This is the mirror image of the Friis equation: each later stage’s intercept is divided by the gain <em>before</em> it, so its nonlinearity is effectively magnified. The largest nonlinearity contributions therefore come from the later stages.</p> <p>Therefore, the first stage is optimized for noise and input matching, and the subsequent stages are optimized for linear gain and bandwidth.</p> <h2 id="the-problem-an-inverter-has-no-bias-current-source">The problem: an inverter has no bias current source</h2> <p>Skipping over the details of the amplifier implementation, we now focus on the process, voltage, and temperature (PVT) sensitivity of the inverter-based amplifier.</p> <p>Traditional designs that use differential pairs have good common-mode and power-supply noise suppression. The inverter has no such immunity, and, more importantly, it is not biased by a current source; it is self-biased. Its bias current and transconductance are set entirely by the power supply and the devices themselves:</p> <p>\begin{equation} \label{eq:inverter-gm} g_m \approx k V_{OV} = k\left(V_{IN} - V_T\right) = k\left(\frac{V_{DD}}{2} - V_T\right) \end{equation}</p> <p>This immediately tells us where the sensitivity comes from. \(V_{DD}\) and \(V_T\) appear side by side, and the overdrive \(V_{DD}/2 - V_T\) is typically small, so a modest shift in \(V_T\) or in mobility (through \(k\)) produces a large relative change in \(g_m\). While the gain of the amplifier is somewhat stabilized by its feedback resistor, its bandwidth is primarily set by \(g_m/C\) and is therefore very sensitive to PVT. If the supply and the threshold vary, the bandwidth, and to a lesser extent the gain, of the inverter will vary significantly. Mitigating these variations is essential for a high-yield, robust design.</p> <h2 id="why-not-a-constant-g_m-bias">Why not a constant-\(g_m\) bias?</h2> <p>A traditional constant-\(g_m\) bias circuit consumes static current, and its devices (and therefore its power) must be scaled up to suppress random mismatch. A ring oscillator, on the other hand, consumes only dynamic power, and that power is nearly independent of the number of stages. It is therefore possible to use a large number of stages to average out random variation in the oscillation frequency [2].</p> <h2 id="closing-a-loop-around-the-supply">Closing a loop around the supply</h2> <p>Since the supply sets the bias, the supply is also the natural control knob. What we want is a mechanism that detects which process corner and temperature the chip is operating at, and uses that information in a feedback loop to adjust \(V_{DD}\). For this purpose, an on-chip programmable linear regulator (LDO) is added, as shown in Figure 1 [1]. The LDO isolates the signal path from power-supply and substrate noise, and it can be calibrated so that bandwidth and gain variation across corners is minimized.</p> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/posts/pvt-tolerant-inverter-amplifier-dvs/dvs-schematic-lakshmikumar-jssc2019-480.webp 480w,/assets/img/posts/pvt-tolerant-inverter-amplifier-dvs/dvs-schematic-lakshmikumar-jssc2019-800.webp 800w,/assets/img/posts/pvt-tolerant-inverter-amplifier-dvs/dvs-schematic-lakshmikumar-jssc2019-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/posts/pvt-tolerant-inverter-amplifier-dvs/dvs-schematic-lakshmikumar-jssc2019.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Dynamic voltage scaling scheme: programmable linear regulator with replica load, process and temperature monitor (ring oscillator with MPT and MNT), and frequency comparator driven by an external reference clock" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> <p><em>Figure 1.</em> Schematic of the dynamic voltage scaling (DVS) scheme. The regulator output (0.75 V to 1.25 V) supplies both the 53 GBd linear TIA and the process and temperature monitor. Reproduced from Lakshmikumar et al. [1], Fig. 15. How do we detect PVT variation on the chip? Briefly put, a ring oscillator (RO) made of the same unit-sized inverter acts as a PVT sensor [1]. Its frequency depends on the same mobility and threshold voltage as the amplifier’s \(g_m\). One distinction is worth keeping in mind. The amplifier’s inverters are biased at \(V_{DD}/2\), so their overdrive is \(V_{DD}/2 - V_T\). The RO swings rail to rail, so its delay is governed by the full-supply overdrive \(V_{DD} - V_T\) (Eq. \eqref{eq:ro-delay} below). The next section shows how the two are nevertheless linked. The RO frequency is compared with an external reference clock in the frequency comparator. The digital output of the comparator then represents the process corner and temperature of the chip [1]. This digital output programs the LDO, which changes \(V_{DD}\) until the RO reaches a targeted frequency. That target represents the nominal response of the inverter (or TIA). The loop cannot change \(V_T\) or the mobility, but by adjusting the supply it compensates for their variation, so the inverter’s transconductance stays tightly controlled even as PVT varies.</p> <h2 id="the-ring-oscillator-as-a-pvt-sensor">The ring oscillator as a PVT sensor</h2> <p>When an odd number of inverters is connected in a ring, there is no stable DC operating point, and the loop satisfies the Barkhausen criterion at the frequency where the stage delays supply the remaining phase shift. The circuit therefore oscillates. Each stage’s delay is set by how long its output current takes to charge the capacitance of the next stage, roughly \(t_p \approx CV/(2I)\). The oscillation frequency is</p> <p>\begin{equation} \label{eq:ro-frequency} f_{osc} = \frac{1}{2N \cdot t_p} \end{equation}</p> <p>where \(N\) is the number of stages and \(t_p\) is the average inverter propagation delay [2]. The factor \(2N\) arises because one oscillation period contains \(2N\) stage transitions: each stage switches once high-to-low and once low-to-high. Similarly, the factor \(1/2\) in \(t_p \approx CV/(2I)\) reflects the fact that each output only has to swing to the next stage’s switching threshold, \(V/2\). The symmetric NMOS and PMOS drive strengths play a different role: they make the rising and falling delays nearly equal, which is why a single average \(t_p\) can be used [2].</p> <p>Assuming that the gate delay is dominated by slewing and that the transistors obey the square law, the inverter delay in the RO is [2]</p> <p>\begin{equation} \label{eq:ro-delay} t_p = \frac{V_{DD}}{2} \cdot \frac{C_{gg} + C_{dd}}{\frac{W}{2L}\mu C_{ox}\left(V_{DD} - V_T\right)^2} \end{equation}</p> <p>Here \(C_{gg} + C_{dd}\) is the capacitance each stage drives (the next stage’s gate plus its own drain), and the denominator is the square-law saturation current of a device with its gate at the full supply. ([2] writes the threshold in this equation as \(V_{TH}\); it is the same \(V_T\) as below.) Observe that the delay depends on exactly the same \(\mu\) and \(V_T\) as the amplifier’s \(g_m\), so it moves with PVT in the same direction.</p> <p>For the inverters in the analog signal path, the gates are biased at \(V_{DD}/2\), so their transconductance is [2]</p> <p>\begin{equation} \label{eq:signal-gm} g_m = \frac{W}{L}\mu C_{ox}\left(\frac{V_{DD}}{2} - V_T\right) \end{equation}</p> <p>Notice that \(V_{DD}\) directly sets the analog inverter’s \(g_m\), and thus also its unity-gain frequency</p> \[\omega_u = \frac{g_m}{C_{gg} + C_{dd}}, \qquad f_u = \frac{\omega_u}{2\pi}\] <p>We now want to express the ring frequency in terms of this same \(g_m\) [2]. The derivation takes three steps.</p> <p><strong>Step 1: Invert the stage delay.</strong> Rearranging Eq. \eqref{eq:ro-delay}, the factor of \(1/2\) in \(V_{DD}/2\) cancels the factor of 2 in \(W/2L\):</p> \[\frac{1}{t_p} = \frac{2}{V_{DD}} \cdot \frac{\frac{W}{2L}\mu C_{ox}\left(V_{DD} - V_T\right)^2}{C_{gg} + C_{dd}} = \frac{W}{L}\mu C_{ox} \cdot \frac{\left(V_{DD} - V_T\right)^2}{V_{DD}\left(C_{gg} + C_{dd}\right)}\] <p>Substituting into Eq. \eqref{eq:ro-frequency} gives the oscillation frequency in terms of device parameters:</p> \[f_{osc} = \frac{1}{2N t_p} = \frac{1}{2N} \cdot \frac{W}{L}\mu C_{ox} \cdot \frac{\left(V_{DD} - V_T\right)^2}{V_{DD}\left(C_{gg} + C_{dd}\right)}\] <p><strong>Step 2: Eliminate the device constant using the amplifier’s \(g_m\).</strong> The product \((W/L)\mu C_{ox}\) is common to the ring and the amplifier, since both use the same unit inverter. Solving Eq. \eqref{eq:signal-gm} for it,</p> \[\frac{W}{L}\mu C_{ox} = \frac{g_m}{\frac{V_{DD}}{2} - V_T}\] <p>and substituting into the previous expression gives the oscillation frequency in terms of \(g_m\) [2]:</p> <p>\begin{equation} \label{eq:fosc-gm} f_{osc} = \frac{1}{2N} \cdot \frac{\left(V_{DD} - V_T\right)^2}{V_{DD}\left(\frac{V_{DD}}{2} - V_T\right)} \cdot \frac{g_m}{C_{gg} + C_{dd}} \end{equation}</p> <p>Notice that the mobility, the oxide capacitance and the device aspect ratio have all disappeared. Only the supply, the threshold and the amplifier’s own \(g_m/C\) remain.</p> <p><strong>Step 3: Write it in terms of \(f_u\).</strong> Since \(g_m/(C_{gg} + C_{dd}) = \omega_u = 2\pi f_u\),</p> <p>\begin{equation} \label{eq:fosc-fu} f_{osc} = \frac{1}{2N} \cdot \alpha \cdot 2\pi f_u = \frac{\pi}{N}\,\alpha f_u \end{equation}</p> <p>where all the voltage dependence is collected into a single dimensionless factor:</p> <p>\begin{equation} \label{eq:alpha} \alpha = \frac{\left(V_{DD} - V_T\right)^2}{V_{DD}\left(\frac{V_{DD}}{2} - V_T\right)} \end{equation}</p> <p>Eq. \eqref{eq:fosc-fu} is the central result. The ring frequency is the inverter’s unity-gain frequency multiplied by a factor that depends only weakly on the operating point. In general \(\alpha\) is a function of \(V_{DD}\). However, when \(V_{DD} \gg V_T\), the threshold terms in Eq. \eqref{eq:alpha} become negligible, and</p> \[\alpha \;\rightarrow\; \frac{V_{DD}^2}{V_{DD} \cdot \frac{V_{DD}}{2}} = 2, \qquad f_{osc} \;\rightarrow\; \frac{2\pi}{N} f_u\] <p>so \(f_{osc}\) becomes directly proportional to \(f_u\). In [2], \(V_T\) is about 150 mV and the nominal \(V_{DD}\) is 700 mV. Evaluating Eq. \eqref{eq:alpha} at that point gives \(\alpha = (0.55)^2 / (0.7 \times 0.2) \approx 2.16\), already close to the limiting value. The simulated \(\alpha\) in [2] stays within ±5% over the relevant supply range.</p> <p>Notice also that the stage capacitance \(C_{gg} + C_{dd}\) appears in both \(t_p\) and \(\omega_u\). The ring therefore automatically tracks \(g_m\) <em>per unit capacitance</em>, which is exactly what sets the amplifier’s poles.</p> <p>We can therefore tune \(V_{DD}\) with the programmable LDO to set the oscillation frequency, and holding \(f_{osc}\) constant across corners stabilizes \(f_u\). This translates into a relatively fixed pole frequency in the amplifier’s transfer function across corners [2].</p> <h3 id="mpt-and-mnt">MPT and MNT</h3> <p>One key implementation detail of the RO-based sensor in Figure 1 is the pair of triode-region devices, MPT and MNT, between the ring and its two supply rails [1]. The inverter-based amplifier sees a very small swing, so its devices are biased near mid-supply and never see the full regulated voltage across any two terminals. The inverters in the RO, on the other hand, swing rail to rail. Since the regulated voltage can reach 1.25 V across corners, an unprotected RO device would see the full supply across its terminals. MPT and MNT are added to prevent this over-voltage, keeping the voltage across any two terminals of the RO devices within the rated limit [1].</p> <h2 id="measuring-the-ring-frequency">Measuring the ring frequency</h2> <p>Take a stable reference clock, for example 100 MHz, and open a counting window lasting \(M\) reference periods. Count the number \(N\) of RO edges inside this window:</p> \[N = \frac{f_{RO}}{f_{REF}/M} = \frac{M f_{RO}}{f_{REF}}\] <p>For example, a 2 GHz ring counted over a 150 ns window (15 periods of a 100 MHz reference) gives \(N = 300\). One count is then \(1/300 \approx 0.3\%\) of frequency. The reference crystal is accurate to parts per million, so the count is an absolute measure of this die’s speed.</p> <h2 id="the-calibration-loop">The calibration loop</h2> <p>Now compare the measured \(N\) with a target \(N^*\):</p> <ul> <li>If \(N &gt; N^* + \text{margin}\), the die is too fast, so \(D\) goes down by 1. We want a smaller \(f_{osc}\), or equivalently a larger \(t_p\). Reducing \(V_{DD}\) increases \(t_p\) and lowers the oscillation frequency.</li> <li>If \(N &lt; N^* - \text{margin}\), the die is too slow, so \(D\) goes up by 1. We want a larger \(f_{osc}\), or a smaller \(t_p\). Increasing \(V_{DD}\) reduces \(t_p\) and raises the oscillation frequency.</li> <li>Otherwise, the loop stops. The margin is set by the tolerance (discussed below).</li> </ul> <p>Note that \(t_p\) is not strictly inversely proportional to \(V_{DD}\). From Eq. \eqref{eq:ro-delay}, \(t_p \propto V_{DD}/(V_{DD} - V_T)^2\), which decreases monotonically as \(V_{DD}\) increases. Monotonicity is all the loop needs: it guarantees that every correction moves the frequency in the intended direction.</p> <p>The sign of the correction is what makes this negative feedback. A higher code gives a higher \(V_{REG}\), a faster ring, and a larger count, which makes the error larger. The rule then pushes the code back down. The correction always opposes the error, so the system works much like a thermostat.</p> <p>There is a practical limit, however: the loop can only move \(V_{DD}\) as far as the supply range allows. Set the nominal \(V_{REG}\) below the maximum so that slow and hot dies have room to go up.</p> <h2 id="the-programmable-ldo">The programmable LDO</h2> <p>A digital code \(D\) sets the supply in small voltage steps:</p> \[V_{REG} = V_{min} + D\,\Delta V\] <p>The Cisco design used \(\Delta V = 8\) mV steps [3]. A subtle point is that the LDO’s absolute accuracy does not matter. Even if the reference is 20 mV off, the feedback loop simply settles at a different code \(D\), because it locks to a frequency, not to a voltage. Consequently, the regulator does not need a bandgap reference; a reference clock on the board is sufficient [3].</p> <h2 id="choosing-the-design-numbers">Choosing the design numbers</h2> <p>Several questions remain: how many stages should the RO have, what should the target frequency be, how is the frequency comparator built, and how is its output turned into an LDO code? The following numbers must be chosen.</p> <h3 id="number-of-ring-stages">Number of ring stages</h3> <p>As discussed above, RO power is nearly independent of the number of stages, while random variation in the oscillation frequency averages out over more stages [2]. A longer ring is therefore preferable for mismatch. It also lowers the oscillation frequency for a given stage delay (Eq. \eqref{eq:ro-frequency}), which brings the count into a convenient range. For reference, the 740 MHz nominal frequency and 5 ps stage delay quoted in [2] imply, through Eq. \eqref{eq:ro-frequency}, a ring of roughly 135 stages.</p> <h3 id="the-target-count-n">The target count \(N^*\)</h3> <p>There are two sensible choices:</p> <ol> <li> <strong>The nominal corner.</strong> Measure \(N\) at TT, 27 °C and the nominal supply, and use that as the target. This is the corner where the design has already been verified and works optimally, so the loop reproduces the verified design on every die.</li> <li> <strong>A performance target.</strong> Choose the ring frequency that gives the desired amplifier bandwidth. Zheng et al. set their frequency target externally for the best CTLE bandwidth, power and performance [2], and the target in the Cisco design is programmable [1], [3].</li> </ol> <p>The first choice is the natural starting point; the second is a refinement once the relationship between ring frequency and amplifier bandwidth has been characterized.</p> <h3 id="step-size-and-tolerance">Step size and tolerance</h3> <p>One code changes the count by</p> \[G = N^* \cdot S \cdot \Delta V, \qquad S = \frac{\partial \ln f}{\partial V}\] <p>Here \(S\) is the fractional change of ring frequency per volt, so \(S\,\Delta V\) is the fractional frequency change per code, and multiplying by \(N^*\) converts it to counts. With \(S \approx 1.7\ \mathrm{V^{-1}}\) and \(\Delta V = 10\) mV, a single code changes the count by about 5.</p> <p>The tolerance window around the target contains \(2\,\text{tol} + 1\) integer counts. The important point is that this window must be wider than one step:</p> \[2\,\text{tol} + 1 &gt; G\] <p>To see why, suppose the window were narrower than one step. Then the count would jump over the window on every update. One code lands just above the window, so the loop steps down. The next code lands just below it, so the loop steps up. The loop then toggles between those two codes forever, which is a limit cycle. With the window wider than one step, at least one code always lands inside it, and the loop stops there.</p> <h3 id="timing">Timing</h3> <p>During each iteration, the loop must:</p> <ol> <li>wait for the LDO to settle (at least \(5\tau\));</li> <li>count ring edges for \(M\) reference periods;</li> <li>compare \(N\) with \(N^*\);</li> <li>update \(D\).</li> </ol> <p>For simulation, a counting window of a few hundred nanoseconds keeps the runtime short.</p> <h3 id="code-range">Code range</h3> <p>The code range must cover the slowest and hottest corners without exceeding the device voltage rating.</p> <h3 id="biasing-anything-outside-the-regulated-domain">Biasing anything outside the regulated domain</h3> <p>Anything biased from outside the regulated domain must follow \(V_{REG}/2\). Either AC-couple the amplifier input, or derive its DC level from \(V_{REG}\).</p> <p>The reason follows from Eq. \eqref{eq:inverter-gm}. The inverter’s trip point sits at about \(V_{REG}/2\), and the loop deliberately moves \(V_{REG}\) from corner to corner. A source with a fixed DC level is no longer at the trip point once \(V_{REG}\) moves. The high-gain inverter amplifies that DC offset, and the output saturates at some corners. AC coupling, or a DC level derived from \(V_{REG}\), keeps the input centred on the trip point wherever the loop settles. The same applies to any following stage that assumes a fixed common-mode level.</p> <h3 id="foreground-or-background-calibration">Foreground or background calibration</h3> <p>Decide between running the loop once at start-up (foreground) and re-checking periodically (background). In background mode, add hysteresis so that small drifts do not make the supply dither. In practice, this means a wider error threshold for restarting a correction than for stopping one.</p> <h2 id="is-the-zhengmurmann-fsm-implementation-required">Is the Zheng–Murmann FSM implementation required?</h2> <p>In the implementation of Zheng et al. [2], the ring oscillator’s output itself clocks a finite state machine (FSM). The FSM controls the LDO, which in that design regulates the ground of the core and reference circuits rather than the supply. The FSM uses an available 100 MHz reference to tune the LDO until the ring reaches a programmable frequency target (nominally 740 MHz, corresponding to a 5 ps inverter delay), with hysteresis. The target is set externally for the best CTLE bandwidth, power and performance, and the whole replica-bias block (reference diode, ring oscillator, LDO and FSM) can be shared across several transceiver channels to amortize its area and power [2].</p> <p>For an ideal or behavioral feedback loop, most of these details are optional rather than necessary:</p> <ul> <li> <strong>Clocking the FSM from the ring</strong> is a hardware convenience, not a requirement. Any controller that counts ring edges in a reference-timed window and updates the code implements the same loop. The Cisco design uses firmware instead [1].</li> <li> <strong>Regulating ground instead of the supply</strong> is an interface choice in [2]. The Cisco design regulates the supply [1]. The sensing principle is the same either way.</li> <li> <strong>Hysteresis</strong> is worth keeping, because it prevents dithering in background operation.</li> <li> <strong>Sharing the bias block</strong> across channels matters only for area and power in a multi-channel chip.</li> </ul> <p>What is necessary is common to both designs: a ring built from the same unit inverter on the same regulated net, a stable reference to measure its frequency against, a programmable regulator, and a controller whose correction has the right sign.</p> <h2 id="summary">Summary</h2> <p>A self-biased CMOS inverter is an efficient, linear amplifier, but its \(g_m\), and with it its bandwidth, is set directly by \(V_{DD} - 2V_T\) and the device mobility, which makes it highly sensitive to PVT. A ring oscillator built from the same unit inverter oscillates at a frequency proportional to the inverter’s unity-gain frequency, \(f_{osc} = (\pi/N)\,\alpha f_u\), with \(\alpha \approx 2\). Counting the ring’s edges against a stable reference clock gives an absolute measure of the die’s speed. A programmable LDO, driven by a simple negative-feedback controller, then adjusts the supply until the count matches a target. The result is a nearly constant \(f_u\) across corners, without a bandgap and with only dynamic power spent in the sensor. Its limits are the available supply range and how closely the rail-to-rail ring tracks the amplifier biased at mid-supply.</p> <p>Behavioral modeling of the DVS feedback loop in Cadence will be explored in a future post.</p> <h2 id="references">References</h2> <p>[1] K. R. Lakshmikumar, A. Kurylak, M. Nagaraju, R. Booth, R. K. Nandwana, J. Pampanin, and V. Boccuzzi, “A Process and Temperature Insensitive CMOS Linear TIA for 100 Gb/s/λ PAM-4 Optical Links,” <em>IEEE Journal of Solid-State Circuits</em>, vol. 54, no. 11, pp. 3180–3190, Nov. 2019. <a href="https://doi.org/10.1109/JSSC.2019.2939652" rel="external nofollow noopener" target="_blank">doi:10.1109/JSSC.2019.2939652</a></p> <p>[2] K. Zheng, Y. Frans, K. Chang, and B. Murmann, “A 56 Gb/s 6 mW 300 µm² inverter-based CTLE for short-reach PAM2 applications in 16 nm CMOS,” in <em>Proc. IEEE Custom Integrated Circuits Conference (CICC)</em>, 2018. <a href="https://doi.org/10.1109/CICC.2018.8357076" rel="external nofollow noopener" target="_blank">doi:10.1109/CICC.2018.8357076</a></p> <p>[3] K. Lakshmikumar, A. C. Kurylak, M. Nagaraju, and R. V. H. Booth, “Process and temperature insensitive linear circuit,” U.S. Patent 10,505,509 B2, Dec. 10, 2019. <a href="https://patents.google.com/patent/US10505509" rel="external nofollow noopener" target="_blank">Google Patents</a></p> <p>[4] B. Razavi, <em>RF Microelectronics</em>, 2nd ed. Upper Saddle River, NJ, USA: Prentice Hall, 2012.</p> </div> </article> <br> <hr> <br> If you found this useful, please cite this as: <blockquote> <p>, Rohith Sudarshan Anand (Nov 2026). PVT-Tolerant CMOS Inverter Amplifiers Using Ring-Oscillator-Based Dynamic Voltage Scaling. https://rsanand318.github.io.</p> </blockquote> <p>or as a BibTeX entry:</p> <div class="language-bibtex highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">@article</span><span class="p">{</span><span class="nl">2026pvt-tolerant-cmos-inverter-amplifiers-using-ring-oscillator-based-dynamic-voltage-scaling</span><span class="p">,</span>
+  <span class="na">title</span>   <span class="p">=</span> <span class="s">{PVT-Tolerant CMOS Inverter Amplifiers Using Ring-Oscillator-Based Dynamic Voltage Scaling}</span><span class="p">,</span>
+  <span class="na">author</span>  <span class="p">=</span> <span class="s">{, Rohith Sudarshan Anand}</span><span class="p">,</span>
+  <span class="na">year</span>    <span class="p">=</span> <span class="s">{2026}</span><span class="p">,</span>
+  <span class="na">month</span>   <span class="p">=</span> <span class="s">{Nov}</span><span class="p">,</span>
+  <span class="na">url</span>     <span class="p">=</span> <span class="s">{https://rsanand318.github.io/blog/2026/pvt-tolerant-inverter-amplifier-dvs/}</span>
+<span class="p">}</span>
+</code></pre></div></div> <div id="disqus_thread" style="max-width: 930px; margin: 0 auto;"> <script type="text/javascript">
+    var disqus_shortname  = "false";
+    var disqus_identifier = "/blog/2026/pvt-tolerant-inverter-amplifier-dvs";
+    var disqus_title      = "PVT-Tolerant CMOS Inverter Amplifiers Using Ring-Oscillator-Based Dynamic Voltage Scaling";
+    (function() {
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script> <noscript> Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="external nofollow noopener" target="_blank">comments powered by Disqus.</a> </noscript> </div> </div> </div> <div class="col-sm-3"> <nav id="toc-sidebar" class="sticky-top toc toc-sidebar" aria-label="Table of contents" data-toc-collapse="expanded" data-toc-collapse-depth=""></nav> </div> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Rohith Sudarshan Anand . Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Last updated: November 07, 2026. </div> </footer> <script>
+  window.alFolio = {
+    compatBootstrap: false
+  };
+</script> <script src="/assets/js/nav-toggle.js?v=141bd79a73ebc0f0b6ea58e440ae79fc"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?v=e49affc7bd2646f6acdad1dbe02c2359" type="text/javascript"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/al_math/js/mathjax-setup.js"></script> <script src="/assets/js/tooltips-setup.js?v=fe487e99db6c43751e6e7bdb2d6a0611"></script> <script defer src="https://cdn.jsdelivr.net/npm/tocbot@4.36.4/dist/tocbot.min.js" integrity="sha256-lo/r+jQ81wWrxdIiiiEEd538z4+dTJTt+leOuAS7GCw=" crossorigin="anonymous"></script> <script src="/assets/js/no_defer.js?v=53b1b1a645525975c963ce8bf8bfefcf"></script> <script defer src="/assets/js/common.js?v=87baac90f765f2f3362dcf6aaf312a8a"></script> <script defer src="/assets/js/copy_code.js?v=c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?v=896d254890d9b47f0281f63bfccf0dee"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/al_img_tools/js/zoom.js"></script> <script defer src="/assets/js/progress-bar.js?v=499464c5c63ced6cf7ad62509f1e2610" type="text/javascript"></script> <script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js" integrity="sha256-uMJJ3EoTyfRBoTbR+lrfu1uRQ87RZG8AR3cVNuQVeFg=" crossorigin="anonymous"></script> <script>
+    addBackToTop();
+  </script> <script type="module" src="/assets/al_search/js/search/ninja-keys.min.js"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/al_search/js/search-setup.js"></script> <script>
+// get the ninja-keys element
+const ninja = document.querySelector('ninja-keys');
+
+// add the home and posts menu items
+ninja.data = [{
+    id: "nav-about",
+    title: "about",
+    section: "Navigation",
+    handler: () => {
+      window.location.href = "/";
+    },
+  },{id: "nav-blog",
+          title: "blog",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/blog/";
+          },
+        },{id: "nav-cv",
+          title: "CV",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/cv/";
+          },
+        },{id: "post-pvt-tolerant-cmos-inverter-amplifiers-using-ring-oscillator-based-dynamic-voltage-scaling",
+        
+          title: "PVT-Tolerant CMOS Inverter Amplifiers Using Ring-Oscillator-Based Dynamic Voltage Scaling",
+        
+        description: "How a replica ring oscillator, a frequency counter, and a programmable LDO form a feedback loop that keeps the bandwidth of self-biased CMOS inverter amplifiers stable across process, voltage, and temperature.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/pvt-tolerant-inverter-amplifier-dvs/";
+          
+        },
+      },{id: "post-analog-design-using-the-cmos-inverter-part-1",
+        
+          title: "Analog Design Using The CMOS Inverter -- Part 1",
+        
+        description: "Introduction, VTC, and Resistive Feedback Inverter For High-Speed",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/analog-design-using-the-cmos-inverter-part-one-final/";
+          
+        },
+      },{id: "post-mosfet-device-behavior-for-circuit-designers",
+        
+          title: "MOSFET Device Behavior for Circuit Designers",
+        
+        description: "A first-principles walkthrough of MOSFET channel formation, the drain current equation, and the short-channel effects that matter for analog and RF design.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/mosfet-device-behavior-circuit-designers/";
+          
+        },
+      },{id: "post-ldo-design-part-i-fundamentals-of-linear-regulators",
+        
+          title: "LDO Design Part I: Fundamentals of Linear Regulators",
+        
+        description: "A first-principles motivation for the LDO",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/ldo-design-part-1-fundamentals/";
+          
+        },
+      },{id: "post-feedback-i-what-negative-feedback-actually-does",
+        
+          title: "Feedback I: What Negative Feedback Actually Does",
+        
+        description: "An intuitive and mathematical derivation of the basic negative-feedback equation, loop gain, and why large loop gain forces the feedback signal to track the input.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/feedback-i-negative-feedback-amplifiers/";
+          
+        },
+      },{id: "post-feedback-ii-distortion-and-feedback-in-analog-circuits",
+        
+          title: "Feedback II: Distortion and Feedback in Analog Circuits",
+        
+        description: "How negative feedback desensitizes closed-loop gain to the signal-dependent nonlinearity of the open-loop amplifier, and why this suppresses harmonic and intermodulation distortion.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/feedback-distortion-in-analog-circuits/";
+          
+        },
+      },{id: "books-the-godfather",
+          title: 'The Godfather',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/the_godfather/";
+            },},{id: "news-a-simple-inline-announcement",
+          title: 'A simple inline announcement.',
+          description: "",
+          section: "News",},{id: "news-a-long-announcement-with-details",
+          title: 'A long announcement with details',
+          description: "",
+          section: "News",handler: () => {
+              window.location.href = "/news/announcement_2/";
+            },},{id: "news-a-simple-inline-announcement-with-markdown-emoji-sparkles-smile",
+          title: 'A simple inline announcement with Markdown emoji! <img class="emoji" title=":sparkles:" alt=":sparkles:" src="https://github.githubassets.com/images/icons/emoji/unicode/2728.png" height="20" width="20"> <img class="emoji" title=":smile:" alt=":smile:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f604.png" height="20" width="20">',
+          description: "",
+          section: "News",},{id: "projects-project-1",
+          title: 'project 1',
+          description: "with background image",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/1_project/";
+            },},{id: "projects-project-2",
+          title: 'project 2',
+          description: "a project with a background image and giscus comments",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/2_project/";
+            },},{id: "projects-project-3-with-very-long-name",
+          title: 'project 3 with very long name',
+          description: "a project that redirects to another website",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/3_project/";
+            },},{id: "projects-project-4",
+          title: 'project 4',
+          description: "another without an image",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/4_project/";
+            },},{id: "projects-project-5",
+          title: 'project 5',
+          description: "a project with a background image",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/5_project/";
+            },},{id: "projects-project-6",
+          title: 'project 6',
+          description: "a project with no image",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/6_project/";
+            },},{id: "projects-project-7",
+          title: 'project 7',
+          description: "with background image",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/7_project/";
+            },},{id: "projects-project-8",
+          title: 'project 8',
+          description: "an other project with a background image and giscus comments",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/8_project/";
+            },},{id: "projects-project-9",
+          title: 'project 9',
+          description: "another project with an image 🎉",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/9_project/";
+            },},{id: "teachings-data-science-fundamentals",
+          title: 'Data Science Fundamentals',
+          description: "This course covers the foundational aspects of data science, including data collection, cleaning, analysis, and visualization. Students will learn practical skills for working with real-world datasets.",
+          section: "Teachings",handler: () => {
+              window.location.href = "/teachings/data-science-fundamentals/";
+            },},{id: "teachings-introduction-to-machine-learning",
+          title: 'Introduction to Machine Learning',
+          description: "This course provides an introduction to machine learning concepts, algorithms, and applications. Students will learn about supervised and unsupervised learning, model evaluation, and practical implementations.",
+          section: "Teachings",handler: () => {
+              window.location.href = "/teachings/introduction-to-machine-learning/";
+            },},{
+        id: 'social-cv',
+        title: 'CV',
+        section: 'Socials',
+        handler: () => {
+          window.open("/assets/pdf/Rohith%20Sudarshan%20Anand%20Resume.pdf", "_blank");
+        },
+      },{
+        id: 'social-email',
+        title: 'email',
+        section: 'Socials',
+        handler: () => {
+          window.open("mailto:%72%61%6E%61%6E%64%37%37@%67%61%74%65%63%68.%65%64%75", "_blank");
+        },
+      },{
+        id: 'social-linkedin',
+        title: 'LinkedIn',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://www.linkedin.com/in/rohith-sudarshan-anand-576b77242", "_blank");
+        },
+      },{
+      id: 'light-theme',
+      title: 'Change theme to light',
+      description: 'Change the theme of the site to Light',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("light");
+      },
+    },
+    {
+      id: 'dark-theme',
+      title: 'Change theme to dark',
+      description: 'Change the theme of the site to Dark',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("dark");
+      },
+    },
+    {
+      id: 'system-theme',
+      title: 'Use system default theme',
+      description: 'Change the theme of the site to System Default',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("system");
+      },
+    },];
+
+</script> <script src="/assets/al_search/js/shortcut-key.js"></script> </body> </html>
